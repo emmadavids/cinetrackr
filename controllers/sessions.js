@@ -1,9 +1,9 @@
 const User = require("../models/user");
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 
 const SessionsController = {
 	New: (req, res) => {
-		res.render("sessions/new", { title: "Acebook" });
+		res.render("sessions/new", { title: "Cinetrackr" });
 	},
 
 	Create: (req, res) => {
@@ -26,7 +26,7 @@ const SessionsController = {
 						res.render("sessions/new", { errorMessage: errorMessage });
 					} else {
 						req.session.user = user;
-						res.redirect("/posts");
+						res.redirect("/movies");
 					}
 				});
 			}
