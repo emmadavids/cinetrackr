@@ -15,7 +15,6 @@ const UsersController = {
 				user.email,
 				user.password
 			);
-
 			if (errorMessages.length > 0) {
 				res.status(400);
 				res.render("users/new", { errorMessages: errorMessages });

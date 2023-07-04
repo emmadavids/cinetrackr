@@ -18,7 +18,16 @@ const UserSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: [true, "Password is required"],
-	}, })
+	}, 
+    watch_list: {
+        type:[String],
+        default:[],
+    },
+    already_watched: {
+        type:[String],
+        default:[],
+    }
+})
 
     UserSchema.pre("save", function (next) {
         const user = this;
@@ -48,14 +57,14 @@ const UserSchema = new mongoose.Schema({
     
     // User.collection.drop();
 
-    // const usersData = [
-    //     {
-    //         firstName: "Test",
-    //         lastName: "Test",
-    //         email: "test@test.com",
-    //         password: "123", // Testtest1
-    //     },
-    // ];
+    const usersData = [
+        {
+            firstName: "Test",
+            lastName: "Test",
+            email: "test@test.com",
+            password: "password123", // Testtest1
+        },
+    ];
     
     // User.insertMany(usersData, (error) => {
     //     if (error) {
