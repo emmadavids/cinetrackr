@@ -18,7 +18,16 @@ const UserSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: [true, "Password is required"],
-	}, })
+	}, 
+    watch_list: {
+        type:[String],
+        default:[],
+    },
+    already_watched: {
+        type:[String],
+        default:[],
+    }
+})
 
     const User = mongoose.model("User", UserSchema);
 
