@@ -7,13 +7,11 @@ const session = require("express-session");
 const methodOverride = require("method-override");
 
 const homeRouter = require("./routes/home");
-// const postsRouter = require("./routes/posts");
 const sessionsRouter = require("./routes/sessions");
 const usersRouter = require("./routes/users");
-// const profileRouter = require("./routes/profile");
-// const commentsRouter = require("./routes/posts");
+const moviesRouter = require("./routes/movies");
 const { handlebars } = require("hbs");
-// const moment = require("./public/javascripts/moment.min");
+
 
 
 const app = express();
@@ -42,27 +40,29 @@ app.use(
 );
 
 // clear the cookies and session after user logs out
-// app.use((req, res, next) => {
-// 	if (req.cookies.user_sid && !req.session.user) {
-// 		res.clearCookie("user_sid");
-// 		req.session.friendRequestSent = null; // Clear the friendRequestSent value
-// 	}
-// 	next();
-// });
+app.use((req, res, next) => {
+	if (req.cookies.user_sid && !req.session.user) {
+		res.clearCookie("user_sid");
+		
+	}
+	next();
+});
 
 // middleware function to check for logged-in users
-// const sessionChecker = (req, res, next) => {
-// 	if (!req.session.user && !req.cookies.user_sid) {
-// 		res.redirect("/sessions/new");
-// 	} else {
-// 		next();
-// 	}
-// };
+const sessionChecker = (req, res, next) => {
+	if (!req.session.user && !req.cookies.user_sid) {
+		res.redirect("/sessions/new");
+	} else {
+		next();
+	}
+};
 
 // route setup
 app.use("/", homeRouter);
 app.use("/sessions", sessionsRouter);
 app.use("/users", usersRouter);
+app.use("/movies", sessionChecker, moviesRouter);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -83,4 +83,4 @@ app.use((err, req, res) => {
 // handlebars.registerHelper("timeAgo", (date) => moment(date).fromNow());
 
 module.exports = app;
-// module.exports.sessionChecker = sessionChecker;
+module.exports.sessionChecker = sessionChecker;
