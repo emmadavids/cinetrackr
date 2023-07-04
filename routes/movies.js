@@ -6,6 +6,7 @@ const MoviesController = require("../controllers/movies");
 router.get("/", MoviesController.Index);
 
 
+
   
   module.exports = router;
 
