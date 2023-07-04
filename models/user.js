@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
             firstName: "Test",
             lastName: "Test",
             email: "test@test.com",
-            password: "123", // Testtest1
+            password: "password123", // Testtest1
         },
     ];
     

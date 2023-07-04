@@ -1,9 +1,9 @@
 const User = require("../models/user");
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 
 const SessionsController = {
 	New: (req, res) => {
-		res.render("sessions/new", { title: "Acebook" });
+		res.render("sessions/new", { title: "cinetrackr" });
 	},
 
 	Create: (req, res) => {
