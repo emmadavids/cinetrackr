@@ -35,5 +35,49 @@
   </div>
 
 
+  
+  <div id="movies-container"></div>
+
+  <script>
+    const searchButton = document.getElementById('search-button');
+    searchButton.addEventListener('click', handleSearch);
+
+    function handleSearch() {
+      const title = document.getElementById('search-input').value;
+      const encodedTitle = encodeURIComponent(title);
+      const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const movies = data.results;
+          displayMovies(movies);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+
+    function displayMovies(movies) {
+      const moviesContainer = document.getElementById('movies-container');
+      moviesContainer.innerHTML = '';
+
+      if (movies.length === 0) {
+        moviesContainer.textContent = 'No movies found.';
+        return;
+      }
+
+      const ul = document.createElement('ul');
+      movies.forEach(movie => {
+        const li = document.createElement('li');
+        li.textContent = movie.title;
+        ul.appendChild(li);
+      });
+
+      moviesContainer.appendChild(ul);
+    }
+  </script>
+
+
 </body>
 </html>
