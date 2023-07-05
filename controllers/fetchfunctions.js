@@ -1,4 +1,4 @@
-
+const API_KEY = require('./omdb_api_key');
 
 fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${encodeURIComponent(searchQuery)}`)
   .then((response) => {
