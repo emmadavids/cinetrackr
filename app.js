@@ -57,11 +57,22 @@ const sessionChecker = (req, res, next) => {
 	}
 };
 
+
+
 // route setup
 app.use("/", homeRouter);
 app.use("/sessions", sessionsRouter);
 app.use("/users", usersRouter);
 app.use("/movies", sessionChecker, moviesRouter);
+
+app.use(express.static('public', { 
+	setHeaders: (res, path) => {
+	  if (path.endsWith('.js')) {
+		res.setHeader('Content-Type', 'application/javascript');
+	  }
+	}
+  }));
+  
 
 
 // catch 404 and forward to error handler
@@ -81,6 +92,10 @@ app.use((err, req, res) => {
 });
 
 // handlebars.registerHelper("timeAgo", (date) => moment(date).fromNow());
+
+handlebars.registerHelper('jsonStringify', (context) => {
+	return JSON.stringify(context);
+});
 
 module.exports = app;
 module.exports.sessionChecker = sessionChecker;
