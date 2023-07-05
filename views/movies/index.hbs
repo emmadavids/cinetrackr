@@ -79,6 +79,7 @@
     <ul>
       {{#each movies}}
         <li>{{this.title}}</li>
+        <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
       {{/each}}
     </ul>
   {{else}}
