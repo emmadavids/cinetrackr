@@ -10,7 +10,7 @@ const MoviesController = {
 SearchByTitle: async (req, res) => {
     try {
         const title = req.body.title;
-        const movies = await MovieFetch.searchMoviesByTitle(title);
+        const movies = await fetchfunctions.searchMoviesByTitle(title);
 
         res.render("movies/index", { movies });
     } catch (error) {

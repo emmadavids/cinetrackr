@@ -76,8 +76,17 @@
 
     }
   </script>
+  <div id="movie-latest-popular-container">
+  {{#each movies}}
+    <div>
+      <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
+      <span>{{title}}</span>
+    </div>
+  {{/each}}
+</div>
   
 <div id="movies-container">
+  
   {{#if movies}}
     <h2>Search Results</h2>
     <ul>
@@ -91,14 +100,7 @@
   {{/if}}
 </div>
 
-<div id="movie-container">
-  {{#each movies}}
-    <div>
-      <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
-      <span>{{title}}</span>
-    </div>
-  {{/each}}
-</div>
+
 </body>
 
 </html>

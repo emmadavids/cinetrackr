@@ -31,7 +31,6 @@ const searchMoviesByDateRange = (startDate = '', endDate = '') => {
     });
 }
 
-getLatestPopularMovies()
 
 //get latest movies 
 const getLatestMovies = () => {
