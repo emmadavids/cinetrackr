@@ -54,24 +54,25 @@ const UserSchema = new mongoose.Schema({
     const User = mongoose.model("User", UserSchema);
 
     // Seed data
-    
-    // User.collection.drop();
+    if (process.argv.includes("--seed")) {
+        User.collection.drop();
 
     const usersData = [
         {
             firstName: "Test",
             lastName: "Test",
             email: "test@test.com",
-            password: "password123", // Testtest1
+            password: "$2b$10$tdHBC6quvZxMY/Pi/B.Nee8PjEzjLGiia5t3IsV1V03nInMtjlKeS", // password1
         },
     ];
     
-    // User.insertMany(usersData, (error) => {
-    //     if (error) {
-    //         console.log(error);
-    //     } else {
-    //         console.log("Users added successfully!");
-    //     }
-    // });
+    User.insertMany(usersData, (error) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Users added successfully!");
+        }
+    });
+}
     
 module.exports = User;
