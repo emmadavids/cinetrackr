@@ -51,20 +51,20 @@ const UserSchema = new mongoose.Schema({
     });
     
 
-    const User = mongoose.model("User", UserSchema);
+    // const User = mongoose.model("User", UserSchema);
 
     // Seed data
     
     // User.collection.drop();
 
-    const usersData = [
-        {
-            firstName: "Test",
-            lastName: "Test",
-            email: "test@test.com",
-            password: "password123", // Testtest1
-        },
-    ];
+    // const usersData = [
+    //     {
+    //         firstName: "Test",
+    //         lastName: "Test",
+    //         email: "test@test.com",
+    //         password: "password123", // Testtest1
+    //     },
+    // ];
     
     // User.insertMany(usersData, (error) => {
     //     if (error) {
@@ -74,4 +74,6 @@ const UserSchema = new mongoose.Schema({
     //     }
     // });
     
-module.exports = User;
+// module.exports = User;
+
+module.exports = mongoose.model("User", UserSchema);
