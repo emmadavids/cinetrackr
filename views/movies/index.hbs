@@ -25,12 +25,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Movies</title>
+ 
   {{!--
   <link rel="stylesheet" href="styles.css"> --}}
 </head>
 
 <body>
+
+
   <h1 class="text-center">Movies</h1>
+  <div id="movie-container"></div>
 
   <form action="/movies/search" method="post">
     <div class="search-container">
@@ -72,8 +76,17 @@
 
     }
   </script>
+  <div id="movie-latest-popular-container">
+  {{#each movies}}
+    <div>
+      <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
+      <span>{{title}}</span>
+    </div>
+  {{/each}}
+</div>
   
 <div id="movies-container">
+  
   {{#if movies}}
     <h2>Search Results</h2>
     <ul>
@@ -86,6 +99,7 @@
     <p>No films found.</p>
   {{/if}}
 </div>
+
 
 </body>
 

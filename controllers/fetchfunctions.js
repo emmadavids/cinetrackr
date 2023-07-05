@@ -8,7 +8,7 @@ const currentYear = new Date().getFullYear();
 
 //search for movies by year range
 const searchMoviesByDateRange = (startDate = '', endDate = '') => {
-  let url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}`;
+  let url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&sort_by=popularity.desc`;
 
   if (startDate) {
     url += `&primary_release_date.gte=${startDate}`;
@@ -31,9 +31,10 @@ const searchMoviesByDateRange = (startDate = '', endDate = '') => {
     });
 }
 
+
 //get latest movies 
 const getLatestMovies = () => {
-  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&sort_by=release_date.desc`;
+  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&sort_by=release_date.desc&media_type=movie`;
 
   return fetch(url)
     .then(response => response.json())
@@ -54,7 +55,7 @@ const getLatestMovies = () => {
 
 const searchMoviesByTitle = (title) => {
   const encodedTitle = encodeURIComponent(title);
-  const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}&sprt_by=popularity.desc`;
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}&sort_by=popularity.desc&media_type=movie&sprt_by=popularity.desc`;
 
   return fetch(url)
     .then(response => response.json())
