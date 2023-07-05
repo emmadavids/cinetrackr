@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -22,4 +22,32 @@
 
 </body>
 
+</html> --}}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Search</title>
+</head>
+<body>
+  <h1>Movie Search</h1>
+
+  <form action="/movies" method="GET">
+    <label for="year">Year:</label>
+    <input type="text" id="year" name="year" placeholder="Enter a year">
+    <button type="submit">Search</button>
+  </form>
+
+  <div id="movies-container">
+    {{#each movies}}
+    <div class="movie">
+      <h2>{{title}}</h2>
+      <p>Release Date: {{release_date}}</p>
+      <p>Overview: {{overview}}</p>
+    </div>
+    {{/each}}
+  </div>
+</body>
 </html>
