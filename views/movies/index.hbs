@@ -1,25 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<style>
+  .search-container {
+  display: flex;
+  align-items: center;
+  width: 300px; /* Adjust the width as per your preference */
+  margin: 0 auto; /* Centers the search bar horizontally */
+}
+
+.search-input {
+  flex: 1;
+  padding: 8px;
+}
+
+.search-button {
+  padding: 8px 12px;
+}
+</style>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Movies</title>
-  <link rel="stylesheet" href="/stylesheets/posts.css">
-  
+  <link rel="stylesheet" href="styles.css">
 </head>
 
-
-
-
+<body>
   <h1 class="text-center">Movies</h1>
 
-  
-
-
-
+  <div class="search-container">
+  <input type="search" class="form-control" id="search-input" placeholder="search">
+  <button type="button" class="btn btn-outline-primary">Search</button>
+  </div>
 
 
 </body>
-
 </html>
