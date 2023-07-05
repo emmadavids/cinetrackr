@@ -11,7 +11,7 @@ const sessionsRouter = require("./routes/sessions");
 const usersRouter = require("./routes/users");
 const moviesRouter = require("./routes/movies");
 const { handlebars } = require("hbs");
-
+const API_KEY_T = require('./tmdb_api_key');
 
 
 const app = express();
@@ -37,8 +37,11 @@ app.use(
 			expires: 600000,
 		},
 	})
-);
-
+	);
+app.get('/', (req, res) => {
+	res.render('index', { API_KEY_T }); // Pass the API key to the Handlebars template
+		});
+	
 // clear the cookies and session after user logs out
 app.use((req, res, next) => {
 	if (req.cookies.user_sid && !req.session.user) {
