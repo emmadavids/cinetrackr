@@ -1,5 +1,11 @@
-const API_KEY = require('./omdb_api_key');
+const API_KEY = require('../omdb_api_key');
+const searchQuery = "Star Wars";
 
+
+
+const SearchByController = {
+
+SearchByTitle: (req, res) => {
 fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${encodeURIComponent(searchQuery)}`)
   .then((response) => {
     if (!response.ok) {
@@ -14,3 +20,8 @@ fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${encodeURIComponent(searchQu
   .catch((error) => {
     console.error("Error occurred while fetching movies:", error);
   });
+}
+
+}
+
+module.exports = SearchByController;
