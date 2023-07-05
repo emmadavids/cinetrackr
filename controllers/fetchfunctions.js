@@ -53,7 +53,7 @@ const getLatestMovies = () => {
 
 const searchMoviesByTitle = (title) => {
   const encodedTitle = encodeURIComponent(title);
-  const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}&sprt_by=popularity.desc`;
 
   return fetch(url)
     .then(response => response.json())
@@ -68,10 +68,6 @@ const searchMoviesByTitle = (title) => {
       return [];
     });
   }
-  //searchMoviesByTitle('Star Wars');
-  //getLatestMovies()
-  searchMoviesByDateRange('2021', '2021')
-
 
 
 const getLatestPopularMovies = () => {
@@ -100,11 +96,12 @@ const getLatestPopularMovies = () => {
 }
 
 
-module.exports = searchMoviesByTitle;
-module.exports = searchMoviesByDateRange;
-module.exports = getLatestMovies;
-
-
+module.exports = {
+  searchMoviesByTitle,
+  searchMoviesByDateRange,
+  getLatestMovies,
+  getLatestPopularMovies,
+};
 
 
 

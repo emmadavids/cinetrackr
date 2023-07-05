@@ -3,42 +3,51 @@
 
 <style>
   .search-container {
-  display: flex;
-  align-items: center;
-  width: 300px; /* Adjust the width as per your preference */
-  margin: 0 auto; /* Centers the search bar horizontally */
-}
+    display: flex;
+    align-items: center;
+    width: 300px;
+    /* Adjust the width as per your preference */
+    margin: 0 auto;
+    /* Centers the search bar horizontally */
+  }
 
-.search-input {
-  flex: 1;
-  padding: 8px;
-}
+  .search-input {
+    flex: 1;
+    padding: 8px;
+  }
 
-.search-button {
-  padding: 8px 12px;
-}
+  .search-button {
+    padding: 8px 12px;
+  }
 </style>
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Movies</title>
-  <link rel="stylesheet" href="styles.css">
+  {{!--
+  <link rel="stylesheet" href="styles.css"> --}}
 </head>
 
 <body>
   <h1 class="text-center">Movies</h1>
 
-  <div class="search-container">
-  <input type="search" class="form-control" id="search-input" placeholder="search">
-  <button type="button" class="btn btn-outline-primary">Search</button>
-  </div>
+  <form action="/movies/search" method="post">
+    <div class="search-container">
+      <input type="search" class="form-control" id="search-input" name="title" placeholder="search">
+      <button type="submit" id="search-button" class="btn btn-outline-primary">Search</button>
+    </div>
 
 
-  
+  </form>
+
+
+
+
   <div id="movies-container"></div>
 
   <script>
+    const API_KEY_T = '{{API_KEY_T}}';
     const searchButton = document.getElementById('search-button');
     searchButton.addEventListener('click', handleSearch);
 
@@ -57,27 +66,26 @@
           console.error(error);
         });
     }
-
     function displayMovies(movies) {
       const moviesContainer = document.getElementById('movies-container');
-      moviesContainer.innerHTML = '';
+      moviesContainer.innerHTML = ''; // Clear previous search results
 
-      if (movies.length === 0) {
-        moviesContainer.textContent = 'No movies found.';
-        return;
-      }
-
-      const ul = document.createElement('ul');
-      movies.forEach(movie => {
-        const li = document.createElement('li');
-        li.textContent = movie.title;
-        ul.appendChild(li);
-      });
-
-      moviesContainer.appendChild(ul);
     }
   </script>
-
+  
+<div id="movies-container">
+  {{#if movies}}
+    <h2>Search Results</h2>
+    <ul>
+      {{#each movies}}
+        <li>{{this.title}}</li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>No films found.</p>
+  {{/if}}
+</div>
 
 </body>
+
 </html>
