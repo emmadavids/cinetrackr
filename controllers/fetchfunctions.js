@@ -1,4 +1,4 @@
-const API_KEY = require('../omdb_api_key')
+const API_KEY = require('../tmdb_api_key')
 const API_KEY_T = require('../tmdb_api_key')
 
 const fetch = require('node-fetch');
