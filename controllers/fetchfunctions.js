@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 
 const currentYear = new Date().getFullYear();
 
-// search for movies by year range
+//search for movies by year range
 const searchMoviesByDateRange = (startDate = '', endDate = '') => {
   let url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}`;
 
@@ -72,7 +72,43 @@ const searchMoviesByTitle = (title) => {
   //getLatestMovies()
   searchMoviesByDateRange('2021', '2021')
 
-  module.exports = searchMoviesByTitle;
-  module.exports = searchMoviesByDateRange;
-  module.exports = getLatestMovies;
+
+
+const getLatestPopularMovies = () => {
+  // Get the current date
+  const currentDate = new Date().toISOString().split('T')[0];
+
+  // Calculate a recent date (e.g., 1 month ago)
+  const recentDate = new Date();
+  recentDate.setMonth(recentDate.getMonth() - 1);
+  const formattedRecentDate = recentDate.toISOString().split('T')[0];
+
+  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&sort_by=popularity.desc&primary_release_date.gte=${formattedRecentDate}&primary_release_date.lte=${currentDate}&media_type=movie`;
+
+  return fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      const movies = data.results;
+      // Process the movie results
+      console.log(movies);
+      return movies;
+    })
+    .catch(error => {
+      console.error(error);
+      return [];
+    });
+}
+
+
+module.exports = searchMoviesByTitle;
+module.exports = searchMoviesByDateRange;
+module.exports = getLatestMovies;
+
+
+
+
+
+
+
+
 
