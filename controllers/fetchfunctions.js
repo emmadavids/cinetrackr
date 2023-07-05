@@ -1,4 +1,4 @@
-
+API_KEY = 
 
 fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${encodeURIComponent(searchQuery)}`)
   .then((response) => {
