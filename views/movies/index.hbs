@@ -25,17 +25,56 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Movies</title>
- 
+
   {{!--
   <link rel="stylesheet" href="styles.css"> --}}
 </head>
 
 <body>
 
+  <header>
+    <div class="container-fluid px-0">
+      <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="sessions/new">
+            <img src="/images/logo.png" alt="Logo" width="100" height="40" class="d-inline-block align-text-top">
 
-  <h1 class="text-center">Movies</h1>
-  <div id="movie-container"></div>
-  
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="../profile" class="text-decoration-none">My profile</a>
+          <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Films</a>
+          <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Shows</a>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+              <form action='/sessions?_method=DELETE' method='POST'>
+                <input id="logout_button" type="submit" value="Log Out">
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+
+   
+
+    {{!-- Popular movies --}}
+    <div id="movie-latest-popular-container">
+      {{#each movies}}
+      <div>
+        <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
+        <span>{{title}}</span>
+      </div>
+      {{/each}}
+    </div>
+   {{!-- End of popular movies --}}
+
+
   {{!--search by title--}}
   <form action="/movies/search" method="post">
     <div class="search-container">
@@ -53,16 +92,7 @@
   </form> --}}
 
 
-  
-  <div id="movie-latest-popular-container">
-  {{#each movies}}
-    <div>
-      <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
-      <span>{{title}}</span>
-    </div>
-  {{/each}}
-</div>
-  
+
 
 </body>
 
