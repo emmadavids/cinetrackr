@@ -12,9 +12,7 @@ const sessionChecker = (req, res, next) => {
 
 router.get("/", sessionChecker, MoviesController.Index);
 router.post("/search", sessionChecker, MoviesController.SearchByTitle);
-
-// POST request for submitting the form
-router.post('/movies', MoviesController.Index);
+router.post("/search", sessionChecker, MoviesController.SearchByGenre);
 
 
   
