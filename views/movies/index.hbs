@@ -97,7 +97,7 @@
         </div>
       </div>
 
-      <!-- Popular movies -->
+<!-- Popular movies -->
       <div class="col-10">
         <div class="container-fluid mt-5">
           <div class="row">
@@ -108,6 +108,11 @@
                   <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" class="card-img-top">
                   <div class="card-body">
                     <h5 class="card-title">{{title}}</h5>
+                    {{#ifInArray ../user.watch_list title}}
+                    <button class="btn btn-primary" disabled>Added to Watch List</button>
+                    {{else}}
+                    <button class="btn btn-primary add-to-watchlist" data-title="{{title}}">Add to Watch List</button>
+                    {{/ifInArray}}
                   </div>
                 </div>
               </div>
@@ -122,6 +127,36 @@
   <!-- End of popular movies -->
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const addToWatchListButtons = document.querySelectorAll(".add-to-watchlist");
+
+      addToWatchListButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
+          const title = event.target.dataset.title;
+
+          fetch("/movies/watchlist", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ title: title }),
+          })
+            .then(function (response) {
+              if (response.ok) {
+                event.target.disabled = true;
+                event.target.textContent = "Added to Watch List";
+              } else {
+                console.error("Failed to add movie to watch list");
+              }
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

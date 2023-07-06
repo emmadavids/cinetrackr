@@ -60,6 +60,14 @@ const sessionChecker = (req, res, next) => {
 	}
 };
 
+// Custom Handlebars helper function to check if an element exists in an array
+handlebars.registerHelper("ifInArray", function (array, element, options) {
+	if (array && array.includes(element)) {
+	  return options.fn(this);
+	} else {
+	  return options.inverse(this);
+	}
+  });
 
 
 // route setup
