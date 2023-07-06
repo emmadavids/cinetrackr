@@ -97,12 +97,33 @@ const getLatestPopularMovies = () => {
     });
 }
 
+const searchMoviesByGenre = (genre) => {
+  const encodedGenre = encodeURIComponent(genre);
+  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&with_genres=${encodedGenre}&sort_by=popularity.desc`;
+  // 'https://api.themoviedb.org/3/genre/movie/list?language=en'
+
+  return fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      const movies = data.results;
+      // Process the movie results
+      console.log(movies);
+      return movies;
+    })
+    .catch(error => {
+      console.error(error);
+      return [];
+    });
+  }
+
+
 
 module.exports = {
   searchMoviesByTitle,
   searchMoviesByDateRange,
   getLatestMovies,
   getLatestPopularMovies,
+  searchMoviesByGenre,
 };
 
 
