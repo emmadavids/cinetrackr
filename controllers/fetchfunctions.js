@@ -113,14 +113,14 @@ const searchMoviesByGenre = (genre) => {
 
 // UPDATED MOVIE FUNCTION
 
-const searchMovies = (title = "", startDate = "", endDate = "", genre = "") => {
+const searchMovies = (title = "", year = "", genre = "") => {
 
   const encodedTitle = encodeURIComponent(title);
   let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
 
-  if (startDate && endDate) {
-    // const encodedReleaseDate = encodeURIComponent(releaseDate);
-    url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_date.gte=&${startDate}&primary_release_date.lte=${endDate}`;
+  if (year) {
+    const encodedYear = encodeURIComponent(year);
+    url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_year=${encodedYear}`;
     console.log("URL HERE>>>>>>>>>>", url)
   }
   
@@ -135,6 +135,7 @@ const searchMovies = (title = "", startDate = "", endDate = "", genre = "") => {
         if (selectedGenre) {
           const genreId = selectedGenre.id;
           url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&with_genres=${genreId}`;
+
           if (releaseDate) {
             url += `&primary_release_date.gte=${encodedReleaseDate}`;
           }
