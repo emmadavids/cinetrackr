@@ -10,6 +10,7 @@ const homeRouter = require("./routes/home");
 const sessionsRouter = require("./routes/sessions");
 const usersRouter = require("./routes/users");
 const moviesRouter = require("./routes/movies");
+const profileRouter = require("./routes/profile");
 const { handlebars } = require("hbs");
 const API_KEY_T = require('./tmdb_api_key');
 
@@ -75,6 +76,7 @@ app.use("/", homeRouter);
 app.use("/sessions", sessionsRouter);
 app.use("/users", usersRouter);
 app.use("/movies", sessionChecker, moviesRouter);
+app.use("/profile", profileRouter)
 
 app.use(express.static('public', { 
 	setHeaders: (res, path) => {
