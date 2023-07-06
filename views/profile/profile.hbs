@@ -4,14 +4,85 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .checked {
+      text-decoration: line-through;
+    }
+  </style>
   <title>My Movies</title>
 
 </head>
 
 <body>
 
-Hello World
+  <header>
+    <div class="container-fluid px-0">
+      <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="sessions/new">
+            <img src="/images/logo.png" alt="Logo" width="100" height="40" class="d-inline-block align-text-top">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="../profile" class="text-decoration-none">My profile</a>
+          <a href="../movies"class="new-post-link text-decoration-none ps-4" href="/posts/new">Films</a>
+          <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Shows</a>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+              <form action='/sessions?_method=DELETE' method='POST'>
+                <input id="logout_button" type="submit" value="Log Out">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
 
+  <div>
+    <h1>My Watch List</h1>
+    <ul>
+      {{#each watch_list}}
+      <li>
+        <input type="checkbox" class="watch-item" id="{{this}}" {{#ifInArray ../already_watched
+          this}}checked{{/ifInArray}}>
+        <label for="{{this}}" class="{{#ifInArray ../already_watched this}}checked{{/ifInArray}}">{{this}}</label>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <script>
+    const checkboxes = document.querySelectorAll('.watch-item');
+
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', function () {
+        const listItem = this.parentElement;
+        const label = listItem.querySelector('label');
+
+        label.classList.toggle('checked');
+        reorderList(listItem);
+      });
+    });
+
+    function reorderList(listItem) {
+      const list = listItem.parentElement;
+      const items = Array.from(list.children);
+      const checkedItems = items.filter(item => item.querySelector('label').classList.contains('checked'));
+      const uncheckedItems = items.filter(item => !item.querySelector('label').classList.contains('checked'));
+
+      list.innerHTML = '';
+      uncheckedItems.forEach(item => list.appendChild(item));
+      checkedItems.forEach(item => list.appendChild(item));
+    }
+  </script>
 </body>
 
 </html>
