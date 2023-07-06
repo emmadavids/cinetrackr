@@ -25,81 +25,122 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Movies</title>
- 
+
   {{!--
   <link rel="stylesheet" href="styles.css"> --}}
 </head>
 
 <body>
 
+  <header>
+    <div class="container-fluid px-0">
+      <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="sessions/new">
+            <img src="/images/logo.png" alt="Logo" width="100" height="40" class="d-inline-block align-text-top">
 
-  <h1 class="text-center">Movies</h1>
-  <div id="movie-container"></div>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="../profile" class="text-decoration-none">My profile</a>
+          <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Films</a>
+          <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Shows</a>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+              <form action='/sessions?_method=DELETE' method='POST'>
+                <input id="logout_button" type="submit" value="Log Out">
+              </form>
+            </div>
 
-  <form action="/movies/search" method="post">
-    <div class="search-container">
-      <input type="search" class="form-control" id="search-input" name="title" placeholder="search">
-      <button type="submit" id="search-button" class="btn btn-outline-primary">Search</button>
+          </div>
+        </div>
+      </nav>
     </div>
+  </header>
 
 
-  </form>
+  <main>
+
+    <h1 class="text-center">Movies</h1>
+    <div id="movie-container"></div>
+
+    <form action="/movies/search" method="post">
+      <div class="search-container">
+        <input type="search" class="form-control" id="search-input" name="title" placeholder="search">
+        <button type="submit" id="search-button" class="btn btn-outline-primary">Search</button>
+      </div>
+
+
+    </form>
 
 
 
 
-  <div id="movies-container"></div>
+    <div id="movies-container"></div>
 
-  <script>
-    const API_KEY_T = '{{API_KEY_T}}';
-    const searchButton = document.getElementById('search-button');
-    searchButton.addEventListener('click', handleSearch);
+    <script>
+      const API_KEY_T = '{{API_KEY_T}}';
+      const searchButton = document.getElementById('search-button');
+      searchButton.addEventListener('click', handleSearch);
 
-    function handleSearch() {
-      const title = document.getElementById('search-input').value;
-      const encodedTitle = encodeURIComponent(title);
-      const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
+      function handleSearch() {
+        const title = document.getElementById('search-input').value;
+        const encodedTitle = encodeURIComponent(title);
+        const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
 
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          const movies = data.results;
-          displayMovies(movies);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
-    function displayMovies(movies) {
-      const moviesContainer = document.getElementById('movies-container');
-      moviesContainer.innerHTML = ''; // Clear previous search results
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            const movies = data.results;
+            displayMovies(movies);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
+      function displayMovies(movies) {
+        const moviesContainer = document.getElementById('movies-container');
+        moviesContainer.innerHTML = ''; // Clear previous search results
 
-    }
-  </script>
-  <div id="movie-latest-popular-container">
-  {{#each movies}}
-    <div>
-      <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
-      <span>{{title}}</span>
-    </div>
-  {{/each}}
-</div>
-  
-<div id="movies-container">
-  
-  {{#if movies}}
-    <h2>Search Results</h2>
-    <ul>
+      }
+    </script>
+
+
+    {{!-- Popular movies --}}
+    <div id="movie-latest-popular-container">
       {{#each movies}}
+      <div>
+        <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
+        <span>{{title}}</span>
+      </div>
+      {{/each}}
+    </div>
+
+    
+
+
+
+
+    {{!-- End of popular movies --}}
+
+    <div id="movies-container">
+
+      {{#if movies}}
+      <h2>Search Results</h2>
+      <ul>
+        {{#each movies}}
         <li>{{this.title}}</li>
         <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
-      {{/each}}
-    </ul>
-  {{else}}
-    <p>No films found.</p>
-  {{/if}}
-</div>
+        {{/each}}
+      </ul>
+      {{else}}
+      <p>No films found.</p>
+      {{/if}}
+    </div>
 
+  </main>
 
 </body>
 
