@@ -5,15 +5,23 @@ const User = require("../models/user");
 const MoviesController = {
     async Index(req, res) {
         try {
-            const movies = await fetchfunctions.getLatestPopularMovies();
-            const user = req.session.user;
-
-            res.render("movies/index", { movies, user });
+          const movies = await fetchfunctions.getLatestPopularMovies();
+          const user = req.session.user;
+          let watchList = [];
+    
+          if (user) {
+            const userData = await User.findById(user._id);
+            if (userData) {
+              watchList = userData.watch_list;
+            }
+          }
+    
+          res.render("movies/index", { movies, user, watchList });
         } catch (error) {
-            console.error(error);
-            res.render("movies/index", { movies: [], user: null });
+          console.error(error);
+          res.render("movies/index", { movies: [], user: null, watchList: [] });
         }
-    },
+      },
 
     async addToWatchList(req, res) {
         try {
