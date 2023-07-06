@@ -63,16 +63,7 @@
 
    
 
-    {{!-- Popular movies --}}
-    <div id="movie-latest-popular-container">
-      {{#each movies}}
-      <div>
-        <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
-        <span>{{title}}</span>
-      </div>
-      {{/each}}
-    </div>
-   {{!-- End of popular movies --}}
+ 
 
 
   {{!--search by title--}}
@@ -91,7 +82,16 @@
     </div>
   </form> --}}
 
-
+   {{!-- Popular movies --}}
+    <div id="movie-latest-popular-container">
+      {{#each movies}}
+      <div>
+        <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
+        <span>{{title}}</span>
+      </div>
+      {{/each}}
+    </div>
+   {{!-- End of popular movies --}}
 
 
 </body>
