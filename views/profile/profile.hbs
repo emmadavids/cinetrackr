@@ -13,13 +13,18 @@
     .checked {
       text-decoration: line-through;
     }
+
+
+    .movie-item img {
+      width: 200px;
+      height: 300px;
+      object-fit: cover;
+    }
   </style>
   <title>My Movies</title>
-
 </head>
 
 <body>
-
   <header>
     <div class="container-fluid px-0">
       <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark">
@@ -32,7 +37,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <a href="../profile" class="text-decoration-none">My profile</a>
-          <a href="../movies"class="new-post-link text-decoration-none ps-4" href="/posts/new">Films</a>
+          <a href="../movies" class="new-post-link text-decoration-none ps-4" href="/posts/new">Films</a>
           <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Shows</a>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
@@ -51,38 +56,14 @@
     <ul>
       {{#each watch_list}}
       <li>
-        <input type="checkbox" class="watch-item" id="{{this}}" {{#ifInArray ../already_watched
-          this}}checked{{/ifInArray}}>
-        <label for="{{this}}" class="{{#ifInArray ../already_watched this}}checked{{/ifInArray}}">{{this}}</label>
+        <div class="movie-item">
+          <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" class="card-img-top">
+          <label for="{{title}}">{{title}}</label>
+        </div>
       </li>
       {{/each}}
     </ul>
   </div>
-
-  <script>
-    const checkboxes = document.querySelectorAll('.watch-item');
-
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', function () {
-        const listItem = this.parentElement;
-        const label = listItem.querySelector('label');
-
-        label.classList.toggle('checked');
-        reorderList(listItem);
-      });
-    });
-
-    function reorderList(listItem) {
-      const list = listItem.parentElement;
-      const items = Array.from(list.children);
-      const checkedItems = items.filter(item => item.querySelector('label').classList.contains('checked'));
-      const uncheckedItems = items.filter(item => !item.querySelector('label').classList.contains('checked'));
-
-      list.innerHTML = '';
-      uncheckedItems.forEach(item => list.appendChild(item));
-      checkedItems.forEach(item => list.appendChild(item));
-    }
-  </script>
 </body>
 
 </html>
