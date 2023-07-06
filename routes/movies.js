@@ -13,6 +13,7 @@ const sessionChecker = (req, res, next) => {
 router.get("/", sessionChecker, MoviesController.Index);
 router.post("/search", sessionChecker, MoviesController.SearchByTitle);
 router.post("/search", sessionChecker, MoviesController.SearchByGenre);
+router.post("/watchlist", sessionChecker, MoviesController.addToWatchList);
 
 
   

@@ -35,12 +35,17 @@
 
     .card-title {
       font-size: 1rem;
+      height: 25px;
     }
 
     .sticky-container {
       position: sticky;
       top: 35%;
       transform: translateY(-50%);
+    }
+
+    .btn-custom {
+      font-size: 0.75rem;
     }
   </style>
 </head>
@@ -97,31 +102,63 @@
         </div>
       </div>
 
-      <!-- Popular movies -->
-      <div class="col-10">
-        <div class="container-fluid mt-5">
-          <div class="row">
-            <div id="movie-latest-popular-container" class="col-md-12 d-flex flex-wrap justify-content-center">
-              {{#each movies}}
-              <div class="col-md-2 movie-item">
-                <div class="card">
-                  <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" class="card-img-top">
-                  <div class="card-body">
-                    <h5 class="card-title">{{title}}</h5>
-                  </div>
-                </div>
-              </div>
-              {{/each}}
+<!-- Popular movies -->
+<div class="col-10">
+  <div class="container-fluid mt-5">
+    <div class="row">
+      <div id="movie-latest-popular-container" class="col-md-12 d-flex flex-wrap justify-content-center">
+        {{#each movies}}
+        <div class="col-md-2 movie-item">
+          <div class="card">
+            <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" class="card-img-top">
+            <div class="card-body p-2">
+              <h5 class="card-title ">{{title}}</h5>
+              {{#ifInArray ../watchList title}}
+              <button class="btn btn-primary btn-custom" disabled>Added to Watch List</button>
+              {{else}}
+              <button class="btn btn-primary add-to-watchlist btn-custom" data-title="{{title}}">Add to Watch List</button>
+              {{/ifInArray}}
             </div>
           </div>
         </div>
+        {{/each}}
       </div>
-
     </div>
   </div>
-  <!-- End of popular movies -->
+</div>
+<!-- End of popular movies -->
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const addToWatchListButtons = document.querySelectorAll(".add-to-watchlist");
+
+    addToWatchListButtons.forEach(function(button) {
+      button.addEventListener("click", function(event) {
+        const title = event.target.dataset.title;
+
+        fetch("/movies/watchlist", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title: title }),
+        })
+          .then(function(response) {
+            if (response.ok) {
+              event.target.disabled = true;
+              event.target.textContent = "Added to Watch List";
+            } else {
+              console.error("Failed to add movie to watch list");
+            }
+          })
+          .catch(function(error) {
+            console.error(error);
+          });
+      });
+    });
+  });
+</script>
 </body>
 
 </html>
