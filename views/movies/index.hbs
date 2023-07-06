@@ -1,33 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<style>
-  .search-container {
-    display: flex;
-    align-items: center;
-    width: 300px;
-    /* Adjust the width as per your preference */
-    margin: 0 auto;
-    /* Centers the search bar horizontally */
-  }
-
-  .search-input {
-    flex: 1;
-    padding: 8px;
-  }
-
-  .search-button {
-    padding: 8px 12px;
-  }
-</style>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Movies</title>
 
-  {{!--
-  <link rel="stylesheet" href="styles.css"> --}}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .search-input {
+      flex: 1;
+      padding: 8px;
+    }
+
+    .search-button {
+      padding: 8px 12px;
+    }
+
+    .movie-item {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .movie-item img {
+      width: 200px;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .card {
+      width: 200px;
+      border: none;
+    }
+
+    .card-title {
+      font-size: 1rem;
+    }
+
+    .sticky-container {
+      position: sticky;
+      top: 35%;
+      transform: translateY(-50%);
+    }
+  </style>
 </head>
 
 <body>
@@ -38,7 +53,6 @@
         <div class="container-fluid">
           <a class="navbar-brand" href="sessions/new">
             <img src="/images/logo.png" alt="Logo" width="100" height="40" class="d-inline-block align-text-top">
-
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,47 +67,61 @@
                 <input id="logout_button" type="submit" value="Log Out">
               </form>
             </div>
-
           </div>
         </div>
       </nav>
     </div>
   </header>
 
+  <div class="container-fluid">
 
-   
+    <div class="row">
 
- 
-
-
-  {{!--search by title--}}
-  <form action="/movies/search" method="post">
-    <div class="search-container">
-      <input type="search" class="form-control" id="search-input-title" name="title" placeholder="title">
-      <input type="search" class="form-control" id="search-input-genre" name="genre" placeholder="genre">
-      <button type="submit" id="search-button" class="btn btn-outline-primary">Search</button>
-    </div>
-  </form>
-    {{!--search by genre--}}
-{{!-- <form action="/movies/search" method="post">
-    <div class="search-container">
-      <input type="search" class="form-control" id="search-input" name="title" placeholder="search">
-      <button type="submit" id="search-button" class="btn btn-outline-primary">Search</button>
-    </div>
-  </form> --}}
-
-   {{!-- Popular movies --}}
-    <div id="movie-latest-popular-container">
-      {{#each movies}}
-      <div>
-        <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
-        <span>{{title}}</span>
+      <!-- Search by title -->
+      <div class="col-2 ">
+        <div class="sticky-container">
+          <form action="/movies/search" method="post">
+            <div class="search-container border rounded p-4">
+              <div class="form-group">
+                <label for="search-input-title">Name</label>
+                <input type="search" class="form-control" id="search-input-title" name="title"
+                  aria-describedby="search box" placeholder="title">
+              </div>
+              <div class="form-group">
+                <label for="search-input-genre">Genre</label>
+                <input type="search" class="form-control" name="genre" id="search-input-genre" placeholder="Genre">
+              </div>
+              <button type="submit" id="search-button" class="btn btn-primary">Search</button>
+            </div>
+          </form>
+        </div>
       </div>
-      {{/each}}
+
+      <!-- Popular movies -->
+      <div class="col-10">
+        <div class="container-fluid mt-5">
+          <div class="row">
+            <div id="movie-latest-popular-container" class="col-md-12 d-flex flex-wrap justify-content-center">
+              {{#each movies}}
+              <div class="col-md-2 movie-item">
+                <div class="card">
+                  <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" class="card-img-top">
+                  <div class="card-body">
+                    <h5 class="card-title">{{title}}</h5>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
-   {{!-- End of popular movies --}}
+  </div>
+  <!-- End of popular movies -->
 
-
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
