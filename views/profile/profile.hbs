@@ -46,18 +46,19 @@
     </div>
   </header>
 
-  <div>
-    <h1>My Watch List</h1>
-    <ul>
-      {{#each watch_list}}
-      <li>
-        <input type="checkbox" class="watch-item" id="{{this}}" {{#ifInArray ../already_watched
-          this}}checked{{/ifInArray}}>
+<div>
+  <h1>My Watch List</h1>
+  <ul>
+    {{#each watch_list}}
+    <li>
+      <form action="/profile" method="POST">
+        <input type="checkbox" class="archive-checkbox" id="{{this}}" name="movieId" value="{{this}}" onchange="this.form.submit()">
         <label for="{{this}}" class="{{#ifInArray ../already_watched this}}checked{{/ifInArray}}">{{this}}</label>
-      </li>
-      {{/each}}
-    </ul>
-  </div>
+      </form>
+    </li>
+    {{/each}}
+  </ul>
+</div>
 
   <script>
     const checkboxes = document.querySelectorAll('.watch-item');
