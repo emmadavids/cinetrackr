@@ -35,47 +35,25 @@
 
   <h1 class="text-center">Movies</h1>
   <div id="movie-container"></div>
-
+  
+  {{!--search by title--}}
   <form action="/movies/search" method="post">
+    <div class="search-container">
+      <input type="search" class="form-control" id="search-input-title" name="title" placeholder="title">
+      <input type="search" class="form-control" id="search-input-genre" name="genre" placeholder="genre">
+      <button type="submit" id="search-button" class="btn btn-outline-primary">Search</button>
+    </div>
+  </form>
+    {{!--search by genre--}}
+{{!-- <form action="/movies/search" method="post">
     <div class="search-container">
       <input type="search" class="form-control" id="search-input" name="title" placeholder="search">
       <button type="submit" id="search-button" class="btn btn-outline-primary">Search</button>
     </div>
+  </form> --}}
 
 
-  </form>
-
-
-
-
-  <div id="movies-container"></div>
-
-  <script>
-    const API_KEY_T = '{{API_KEY_T}}';
-    const searchButton = document.getElementById('search-button');
-    searchButton.addEventListener('click', handleSearch);
-
-    function handleSearch() {
-      const title = document.getElementById('search-input').value;
-      const encodedTitle = encodeURIComponent(title);
-      const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
-
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          const movies = data.results;
-          displayMovies(movies);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
-    function displayMovies(movies) {
-      const moviesContainer = document.getElementById('movies-container');
-      moviesContainer.innerHTML = ''; // Clear previous search results
-
-    }
-  </script>
+  
   <div id="movie-latest-popular-container">
   {{#each movies}}
     <div>
@@ -85,21 +63,6 @@
   {{/each}}
 </div>
   
-<div id="movies-container">
-  
-  {{#if movies}}
-    <h2>Search Results</h2>
-    <ul>
-      {{#each movies}}
-        <li>{{this.title}}</li>
-        <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
-      {{/each}}
-    </ul>
-  {{else}}
-    <p>No films found.</p>
-  {{/if}}
-</div>
-
 
 </body>
 
