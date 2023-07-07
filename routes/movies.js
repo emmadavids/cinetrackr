@@ -16,6 +16,6 @@ router.post("/search", sessionChecker, MoviesController.SearchByGenre);
 router.post("/watchlist", sessionChecker, MoviesController.addToWatchList);
 router.get("/:id", MoviesController.show);
 
-  
-  module.exports = router;
+
+module.exports = router;
 
