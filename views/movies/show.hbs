@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    .search-container {
+        display: flex;
+        align-items: center;
+        width: 300px;
+        /* Adjust the width as per your preference */
+        margin: 0 auto;
+        /* Centers the search bar horizontally */
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 8px;
+    }
+
+    .search-button {
+        padding: 8px 12px;
+    }
+</style>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Movies</title>
+
+    {{!--
+    <link rel="stylesheet" href="styles.css"> --}}
+</head>
+
+<body>
+
+    <header>
+        <div class="container-fluid px-0">
+            <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="sessions/new">
+                        <img src="/images/logo.png" alt="Logo" width="100" height="40"
+                            class="d-inline-block align-text-top">
+
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <a href="../profile" class="text-decoration-none">My profile</a>
+                    <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Films</a>
+                    <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Shows</a>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+                            <form action='/sessions?_method=DELETE' method='POST'>
+                                <input id="logout_button" type="submit" value="Log Out">
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="https://image.tmdb.org/t/p/original/{{movie.poster_path}}" alt="{{movie.title}}"
+                        class="img-fluid">
+                </div>
+                <div class="col-md-8">
+                    <h2>{{movie.title}}</h2>
+                    <p><strong>Release Date:</strong> {{movie.release_date}}</p>
+                    <p><strong>Overview:</strong> {{movie.overview}}</p>
+                    <p><strong>Genres:</strong> {{#each movie.genres}}{{this.name}}{{#unless @last}},
+                        {{/unless}}{{/each}}
+                    </p>
+                    {{#ifInArray ../watchList id}}
+                    <button class="btn btn-primary btn-custom" disabled>Added to Watch List</button>
+                    {{else}}
+                    <button class="btn btn-primary add-to-watchlist btn-custom" data-movie-id="{{id}}">Add to Watch
+                        List</button>
+                    {{/ifInArray}}
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const addToWatchListButtons = document.querySelectorAll(".add-to-watchlist");
+
+            addToWatchListButtons.forEach(function (button) {
+                button.addEventListener("click", function (event) {
+                    const title = event.target.dataset.title;
+
+                    fetch("/movies/watchlist", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ title: title }),
+                    })
+                        .then(function (response) {
+                            if (response.ok) {
+                                event.target.disabled = true;
+                                event.target.textContent = "Added to Watch List";
+                            } else {
+                                console.error("Failed to add movie to watch list");
+                            }
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                        });
+                });
+            });
+        });
+    </script>
+
+</html>

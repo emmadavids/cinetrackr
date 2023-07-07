@@ -5,23 +5,46 @@ const User = require("../models/user");
 const MoviesController = {
     async Index(req, res) {
         try {
-          const movies = await fetchfunctions.getLatestPopularMovies();
-          const user = req.session.user;
-          let watchList = [];
-    
-          if (user) {
-            const userData = await User.findById(user._id);
-            if (userData) {
-              watchList = userData.watch_list;
+            const movies = await fetchfunctions.getLatestPopularMovies();
+            const user = req.session.user;
+            let watchList = [];
+
+            if (user) {
+                const userData = await User.findById(user._id);
+                if (userData) {
+                    watchList = userData.watch_list;
+                }
             }
-          }
-    
-          res.render("movies/index", { movies, user, watchList });
+
+            res.render("movies/index", { movies, user, watchList });
         } catch (error) {
-          console.error(error);
-          res.render("movies/index", { movies: [], user: null, watchList: [] });
+            console.error(error);
+            res.render("movies/index", { movies: [], user: null, watchList: [] });
         }
-      },
+    },
+
+    async show(req, res) {
+        try {
+            const movieId = req.params.id;
+
+            const user = req.session.user;
+            let watchList = [];
+
+            if (user) {
+                const userData = await User.findById(user._id);
+                if (userData) {
+                    watchList = userData.watch_list;
+                }
+            }
+
+            const movie = await fetchfunctions.getMovieById(movieId);
+
+            res.render("movies/show", { movie, user, watchList });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Internal server error");
+        }
+    },
 
     async addToWatchList(req, res) {
         try {
@@ -48,18 +71,18 @@ const MoviesController = {
     },
 
 
-// Render the view with an empty movies array on error
-SearchByTitle: async (req, res) => {
-    try {
-        const title = req.body.title;
-        const movies = await fetchfunctions.searchMoviesByTitle(title);
+    // Render the view with an empty movies array on error
+    SearchByTitle: async (req, res) => {
+        try {
+            const title = req.body.title;
+            const movies = await fetchfunctions.searchMoviesByTitle(title);
 
-        res.render("movies/search", { movies });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal server error");
-    }
-},
+            res.render("movies/search", { movies });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Internal server error");
+        }
+    },
 
     SearchByGenre: async (req, res) => {
         try {
@@ -72,6 +95,6 @@ SearchByTitle: async (req, res) => {
             res.status(500).send("Internal server error");
         }
     }
-        };
+};
 
 module.exports = MoviesController;
