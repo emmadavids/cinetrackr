@@ -95,8 +95,8 @@
           <li><button class="dropdown-item" type="button" value="Western">Western</button></li>
         </ul>
       </div>
-      <input type="search" class="form-control" id="search-input-release-date" name="release_date"
-        placeholder="Release date">
+      <input type="search" class="form-control" id="search-input-release_date" name="release_date"
+        placeholder="release_date">
       <button type="submit" id="search-button" class="btn btn-outline-primary">Search</button>
     </div>
   </form>
@@ -161,14 +161,14 @@
     event.preventDefault();
     const title = document.getElementById('search-input-title').value;
     const genre = document.getElementById('search-input-genre').value;
-    const releaseDate = document.getElementById('search-input-release-date').value;
+    const releaseDate = document.getElementById('search-input-release_date').value;
 
     let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}`;
 
     if (title) {
       const encodedTitle = encodeURIComponent(title);
       url += `&query=${encodedTitle}`;
-    } else if (genre) {
+    } if (genre) {
       const selectedGenre = localStorage.getItem('selectedGenre');
       if (selectedGenre) {
         const encodedGenre = encodeURIComponent(selectedGenre);
@@ -176,7 +176,7 @@
       
         if (releaseDate) {
           const encodedReleaseDate = encodeURIComponent(releaseDate);
-          url += `&primary_release_date=${encodedReleaseDate}`;
+          url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_date=${encodedReleaseDate}`;
         }
       } else {
         console.error('Invalid genre');

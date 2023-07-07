@@ -13,8 +13,5 @@ const sessionChecker = (req, res, next) => {
 router.get("/", sessionChecker, MoviesController.Index);
 router.post("/search", sessionChecker, MoviesController.SearchBy);
 
-
-
-  
-  module.exports = router;
+module.exports = router;
 
