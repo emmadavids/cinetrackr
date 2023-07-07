@@ -71,11 +71,16 @@
         <div class="search-container">
             <input type="search" class="form-control" id="search-input-title" name="title" placeholder="title">
             <input type="search" class="form-control" id="search-input-genre" name="genre" placeholder="genre">
-            <input type="search" class="form-control" id="search-input-release_date" name="release_date" placeholder="release_date">
-    
             <button type="submit" id="search-button" class="btn btn-outline-primary">Search</button>
         </div>
     </form>
+    {{!--search by genre--}}
+    {{!-- <form action="/movies/search" method="post">
+        <div class="search-container">
+            <input type="search" class="form-control" id="search-input" name="title" placeholder="search">
+            <button type="submit" id="search-button" class="btn btn-outline-primary">Search</button>
+        </div>
+    </form> --}}
 
 
 
@@ -89,10 +94,11 @@
         function handleSearch() {
             const title = document.getElementById('search-input-title').value;
             const genre = document.getElementById('search-input-genre').value;
-            const releaseDate = document.getElementById('search-input-release-date').value;
 
             const encodedTitle = encodeURIComponent(title);
-            let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
+            const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
+            const encodedGenre = encodeURIComponent(genre);
+            const url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&with_genres=${encodedGenre}`;
 
              if (genre) {
                 fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY_T}`)
@@ -144,7 +150,6 @@
         <ul>
             {{#each movies}}
             <li>{{this.title}}</li>
-            <li>{{this.release_date}}</li>
             <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
             {{/each}}
         </ul>

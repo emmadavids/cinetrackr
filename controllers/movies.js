@@ -52,10 +52,8 @@ const MoviesController = {
 
     SearchBy: async (req, res) => {
         try {
-            const title = req.body.title;
-            const releaseDate = req.body.release_date;
             const genre = req.body.genre;
-            const movies = await fetchfunctions.searchMovies(title, releaseDate, genre);
+            const movies = await fetchfunctions.searchMoviesByGenre(genre);
 
             res.render("movies/search", { movies });
         } catch (error) {
@@ -63,12 +61,9 @@ const MoviesController = {
             res.status(500).send("Internal server error");
         }
     }
-};
+        };
 
   
 
 
 module.exports = MoviesController;
-
-
-

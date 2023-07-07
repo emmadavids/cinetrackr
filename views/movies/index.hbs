@@ -96,6 +96,7 @@
                 <label for="search-input-genre">Genre</label>
                 <input type="search" class="form-control" name="genre" id="search-input-genre" placeholder="Genre">
               </div>
+
             
                <label for="search-input-genre">Release Year</label>
                   <input type="search" class="form-control" id="search-input-release_date" name="release_date" placeholder="release_date">
@@ -112,7 +113,7 @@
     <div class="row">
       <div id="movie-latest-popular-container" class="col-md-12 d-flex flex-wrap justify-content-center">
         {{#each movies}}
-        <div class="col-md-2 movie-item">
+        <div class="col-md-auto movie-item">
           <div class="card">
             <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" class="card-img-top">
             <div class="card-body p-2">
