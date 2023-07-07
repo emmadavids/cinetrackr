@@ -4,14 +4,98 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Movies</title>
+  <style>
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
 
+    .checked {
+      text-decoration: line-through;
+    }
+
+    .movie-item {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .movie-item img {
+      width: 200px;
+      height: 300px;
+      object-fit: cover;
+    }
+
+        .card {
+      width: 200px;
+      border: none;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      height: 25px;
+    }
+
+  </style>
+  <title>My Movies</title>
 </head>
 
 <body>
+  <header>
+    <div class="container-fluid px-0">
+      <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="sessions/new">
+            <img src="/images/logo.png" alt="Logo" width="100" height="40" class="d-inline-block align-text-top">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a href="../profile" class="text-decoration-none">My profile</a>
+          <a href="../movies" class="new-post-link text-decoration-none ps-4" href="/posts/new">Films</a>
+          <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Shows</a>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+              <form action='/sessions?_method=DELETE' method='POST'>
+                <input id="logout_button" type="submit" value="Log Out">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-Hello World
+  <div class="container">
+    <div class="row">
 
+
+
+      <h1>My Watch List</h1>
+      <ul>
+        <div id="movie-latest-popular-container" class="col-md-12 d-flex flex-wrap justify-content-start">
+          {{#each watch_list}}
+          <li>
+            <div class="movie-item col-md-auto">
+
+              <div class="card mx-4">
+                <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" class="card-img-top">
+                <div class="card-body p-2">
+                  <h5 class="card-title ">{{title}}</h5>
+
+                </div>
+              </div>
+
+
+
+
+            </div>
+          </li>
+          {{/each}}
+        </div>
+      </ul>
+
+    </div>
+  </div>
 </body>
 
 </html>
