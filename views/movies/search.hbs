@@ -71,6 +71,7 @@
         <div class="search-container">
             <input type="search" class="form-control" id="search-input-title" name="title" placeholder="title">
             <input type="search" class="form-control" id="search-input-genre" name="genre" placeholder="genre">
+            <input type="search" class="form-control" id="search-input-release_date" name="release_date" placeholder="release_date">
             <button type="submit" id="search-button" class="btn btn-outline-primary">Search</button>
         </div>
     </form>
@@ -94,6 +95,7 @@
         function handleSearch() {
             const title = document.getElementById('search-input-title').value;
             const genre = document.getElementById('search-input-genre').value;
+             const releaseDate = document.getElementById('search-input-release-date').value;
 
             const encodedTitle = encodeURIComponent(title);
             const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;

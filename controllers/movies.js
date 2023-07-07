@@ -71,7 +71,23 @@ SearchByTitle: async (req, res) => {
             console.error(error);
             res.status(500).send("Internal server error");
         }
-    }
-        };
+    },
+
+
+        SearchBy: async (req, res) => {
+            try {
+                const title = req.body.title;
+                const releaseDate = req.body.release_date;
+                const genre = req.body.genre;
+                const movies = await fetchfunctions.searchMovies(title, releaseDate, genre);
+    
+                res.render("movies/search", { movies });
+            } catch (error) {
+                console.error(error);
+                res.status(500).send("Internal server error");
+            }
+        }
+    };
+    
 
 module.exports = MoviesController;
