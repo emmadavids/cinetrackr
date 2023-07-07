@@ -55,24 +55,6 @@
                 <input id="logout_button" type="submit" value="Log Out">
               </form>
             </div>
-            <script>
-              const dropdownItems = document.getElementsByClassName('dropdown-item');
-              Array.from(dropdownItems).forEach(item => {
-                item.addEventListener('click', handleGenreSelection);
-              });
-
-              function handleGenreSelection(event) {
-                const selectedGenre = event.target.value;
-                const genreInput = document.getElementById('search-input-genre');
-                genreInput.value = selectedGenre;
-                handleSearch(); // Trigger search when a genre is selected
-              }
-              function handleSearch() {
-                const title = document.getElementById('search-input-title').value;
-                const genre = document.getElementById('search-input-genre').value;
-                const releaseDate = document.getElementById('search-input-release-date').value;
-              }
-            </script>
           </div>
         </div>
       </nav>
@@ -81,12 +63,8 @@
 
 
 
-
-
-
-
   {{!--search by title--}}
-  <form action="/movies/search" method="post">
+  <form action="/movies/search" method="post" id="search-form">
     <div class="search-container">
       <input type="search" class="form-control" id="search-input-title" name="title" placeholder="title">
       <div class="dropdown">
@@ -95,26 +73,26 @@
           Genre
         </button>
         <ul class="dropdown-menu">
-          <li><button class="dropdown-item" type="button" name="genre" value="Action">Action</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Adventure">Adventure</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Animation">Animation</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Comedy">Comedy</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Crime">Crime</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Documentary">Documentary</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Drama">Drama</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Family">Family</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Fantasy">Fantasy</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="History">History</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Horror">Horror</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Music">Music</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Mystery">Mystery</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Romance">Romance</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Science Fiction">Science Fiction</button>
+          <li><button class="dropdown-item" type="button" value="Action">Action</button></li>
+          <li><button class="dropdown-item" type="button" value="Adventure">Adventure</button></li>
+          <li><button class="dropdown-item" type="button" value="Animation">Animation</button></li>
+          <li><button class="dropdown-item" type="button" value="Comedy">Comedy</button></li>
+          <li><button class="dropdown-item" type="button" value="Crime">Crime</button></li>
+          <li><button class="dropdown-item" type="button" value="Documentary">Documentary</button></li>
+          <li><button class="dropdown-item" type="button" value="Drama">Drama</button></li>
+          <li><button class="dropdown-item" type="button" value="Family">Family</button></li>
+          <li><button class="dropdown-item" type="button" value="Fantasy">Fantasy</button></li>
+          <li><button class="dropdown-item" type="button" value="History">History</button></li>
+          <li><button class="dropdown-item" type="button" value="Horror">Horror</button></li>
+          <li><button class="dropdown-item" type="button" value="Music">Music</button></li>
+          <li><button class="dropdown-item" type="button" value="Mystery">Mystery</button></li>
+          <li><button class="dropdown-item" type="button" value="Romance">Romance</button></li>
+          <li><button class="dropdown-item" type="button" value="Science Fiction">Science Fiction</button>
           </li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Thriller">Thriller</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="TV Movie">TV Movie</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="War">War</button></li>
-          <li><button class="dropdown-item" type="button" name="genre" value="Western">Western</button></li>
+          <li><button class="dropdown-item" type="button" value="Thriller">Thriller</button></li>
+          <li><button class="dropdown-item" type="button" value="TV Movie">TV Movie</button></li>
+          <li><button class="dropdown-item" type="button" value="War">War</button></li>
+          <li><button class="dropdown-item" type="button" value="Western">Western</button></li>
         </ul>
       </div>
       <input type="search" class="form-control" id="search-input-release-date" name="release_date"
@@ -128,13 +106,105 @@
   <div id="movie-latest-popular-container">
     {{#each movies}}
     <div>
-      <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
+      <img src="https://image.tmdb.org/t/p/original/{{this.poster_path}}" alt="{{title}}" width="200" height="300">
       <span>{{title}}</span>
     </div>
     {{/each}}
   </div>
   {{!-- End of popular movies --}}
 
+  <script>
+  const dropdownItems = document.getElementsByClassName('dropdown-item');
+  Array.from(dropdownItems).forEach(item => {
+    item.addEventListener('click', handleGenreSelection);
+  });
+
+  function handleGenreSelection(event) {
+    const selectedGenre = event.target.value;
+    const genreInput = document.getElementById('search-input-genre');
+    genreInput.value = selectedGenre;
+  }
+
+  function displayMovies(movies) {
+    const moviesContainer = document.getElementById('movies-container');
+    moviesContainer.innerHTML = ''; // Clear previous search results
+
+    if (movies.length > 0) {
+      const ul = document.createElement('ul');
+
+      movies.forEach(movie => {
+        const liTitle = document.createElement('li');
+        liTitle.textContent = movie.title;
+        ul.appendChild(liTitle);
+
+        const liReleaseDate = document.createElement('li');
+        liReleaseDate.textContent = movie.release_date;
+        ul.appendChild(liReleaseDate);
+
+        const img = document.createElement('img');
+        img.src = `https://image.tmdb.org/t/p/original/${movie.poster_path}`;
+        img.alt = movie.title;
+        img.width = 200;
+        img.height = 300;
+        ul.appendChild(img);
+      });
+
+      moviesContainer.appendChild(ul);
+    } else {
+      const p = document.createElement('p');
+      p.textContent = 'No films found.';
+      moviesContainer.appendChild(p);
+    }
+  }
+
+  async function handleSearch(event) {
+    event.preventDefault();
+    const title = document.getElementById('search-input-title').value;
+    const genre = document.getElementById('search-input-genre').value;
+    const releaseDate = document.getElementById('search-input-release-date').value;
+
+    let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}`;
+
+    if (title) {
+      const encodedTitle = encodeURIComponent(title);
+      url += `&query=${encodedTitle}`;
+    } else if (genre) {
+      const selectedGenre = localStorage.getItem('selectedGenre');
+      if (selectedGenre) {
+        const encodedGenre = encodeURIComponent(selectedGenre);
+        url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&with_genres=${encodedGenre}`;
+      
+        if (releaseDate) {
+          const encodedReleaseDate = encodeURIComponent(releaseDate);
+          url += `&primary_release_date=${encodedReleaseDate}`;
+        }
+      } else {
+        console.error('Invalid genre');
+        return;
+      }
+    } else {
+      console.log('No search criteria provided.');
+      return;
+    }
+
+    const movies = await searchMovies(url);
+    displayMovies(movies); // Render movies on the page
+  }
+
+  const searchMovies = (url) => {
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const movies = data.results;
+        console.log(movies);
+        return movies;
+      })
+      .catch(error => {
+        console.error(error);
+        return [];
+      });
+  };
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

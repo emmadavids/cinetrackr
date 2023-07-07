@@ -78,29 +78,28 @@
                     Genre
                 </button>
                 <ul class="dropdown-menu">
-                    <li><button class="dropdown-item" type="button" name="genre" value="Action">Action</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Adventure">Adventure</button>
+                    <li><button class="dropdown-item" type="button" value="Action">Action</button></li>
+                    <li><button class="dropdown-item" type="button" value="Adventure">Adventure</button>
                     </li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Animation">Animation</button>
+                    <li><button class="dropdown-item" type="button" value="Animation">Animation</button>
                     </li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Comedy">Comedy</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Crime">Crime</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre"
-                            value="Documentary">Documentary</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Drama">Drama</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Family">Family</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Fantasy">Fantasy</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="History">History</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Horror">Horror</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Music">Music</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Mystery">Mystery</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Romance">Romance</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Science Fiction">Science
+                    <li><button class="dropdown-item" type="button" value="Comedy">Comedy</button></li>
+                    <li><button class="dropdown-item" type="button" value="Crime">Crime</button></li>
+                    <li><button class="dropdown-item" type="button" value="Documentary">Documentary</button></li>
+                    <li><button class="dropdown-item" type="button" value="Drama">Drama</button></li>
+                    <li><button class="dropdown-item" type="button" value="Family">Family</button></li>
+                    <li><button class="dropdown-item" type="button" value="Fantasy">Fantasy</button></li>
+                    <li><button class="dropdown-item" type="button" value="History">History</button></li>
+                    <li><button class="dropdown-item" type="button" value="Horror">Horror</button></li>
+                    <li><button class="dropdown-item" type="button" value="Music">Music</button></li>
+                    <li><button class="dropdown-item" type="button" value="Mystery">Mystery</button></li>
+                    <li><button class="dropdown-item" type="button" value="Romance">Romance</button></li>
+                    <li><button class="dropdown-item" type="button" value="Science Fiction">Science
                             Fiction</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Thriller">Thriller</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="TV Movie">TV Movie</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="War">War</button></li>
-                    <li><button class="dropdown-item" type="button" name="genre" value="Western">Western</button></li>
+                    <li><button class="dropdown-item" type="button" value="Thriller">Thriller</button></li>
+                    <li><button class="dropdown-item" type="button" value="TV Movie">TV Movie</button></li>
+                    <li><button class="dropdown-item" type="button" value="War">War</button></li>
+                    <li><button class="dropdown-item" type="button" value="Western">Western</button></li>
                 </ul>
             </div>
             <input type="search" class="form-control" id="search-input-release-date" name="release_date"
@@ -109,15 +108,31 @@
         </div>
     </form>
 
+    <div id="movies-container">
+        {{#if movies}}
+        <h2>Search Results</h2>
+        <ul>
+            {{#each movies}}
+            <li>{{title}}</li>
+            <li>{{release_date}}</li>
+            <img src="https://image.tmdb.org/t/p/original/{{this.poster_path}}" alt="{{this.title}}" width="200"
+                height="300">
+            {{/each}}
+        </ul>
+        {{else}}
+        <p>No films found.</p>
+        {{/if}}
+    </div>
 
 
 
-    <div id="movies-container"></div>
+    <div id="filter-container"></div>
     <script>
-        src=".././fetchfunctions";
         const API_KEY_T = "74740e711cb05f9a813caae47ddb460f";
         const searchButton = document.getElementById('search-button');
         searchButton.addEventListener('click', handleSearch);
+
+
 
         // Add event listeners to dropdown items
         const dropdownItems = document.getElementsByClassName('dropdown-item');
@@ -125,6 +140,7 @@
         Array.from(dropdownItems).forEach(item => {
             item.addEventListener('click', handleGenreSelection);
         });
+
 
         function handleGenreSelection(event) {
             const selectedGenre = event.target.value;
@@ -135,68 +151,98 @@
             genreInput.value = selectedGenre;
         }
 
-        function handleSearch(event) {
-            event.preventDefault();
-            const title = document.getElementById('search-input-title').value;
-            const genre = localStorage.getItem('selectedGenre');
-            //const genre = document.getElementById('search-input-genre').value;
-            console.log(`THIS IS GENRE >>>>>>`, genre);
-            const releaseDate = document.getElementById('search-input-release-date').value;
-
-
-            const encodedTitle = encodeURIComponent(title);
-            let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
-
-            if (genre) {
-                fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY_T}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(`THIS IS DATA >>>>>>`, data);
-                        const genres = data.genres;
-                        console.log(`THIS IS GENRES >>>>>>`, genres);
-                        const selectedGenre = genres.find(g => g.name.toLowerCase() === genre.toLowerCase());
-                        if (selectedGenre) {
-                            const genreId = selectedGenre.id;
-                            url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&with_genres=${genreId}`;
-                            searchMovies(url);
-                        } else {
-                            console.error('Invalid genre');
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            } else {
-                if (releaseDate) {
-                    const encodedReleaseDate = encodeURIComponent(releaseDate);
-                    url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_date=${encodedReleaseDate}`;
-                }
-                searchMovies(url);
-            }
-        }
+        const searchMovies = (url) => {
+            return fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const movies = data.results;
+                    console.log(movies);
+                    return movies;
+                })
+                .catch(error => {
+                    console.error(error);
+                    return [];
+                });
+        };
 
         function displayMovies(movies) {
             const moviesContainer = document.getElementById('movies-container');
             moviesContainer.innerHTML = ''; // Clear previous search results
 
+            if (movies.length > 0) {
+                const ul = document.createElement('ul');
+
+                movies.forEach(movie => {
+                    const liTitle = document.createElement('li');
+                    liTitle.textContent = movie.title;
+                    ul.appendChild(liTitle);
+
+                    const liReleaseDate = document.createElement('li');
+                    liReleaseDate.textContent = movie.release_date;
+                    ul.appendChild(liReleaseDate);
+
+                    const img = document.createElement('img');
+                    img.src = `https://image.tmdb.org/t/p/original/${movie.poster_path}`;
+                    img.alt = movie.title;
+                    img.width = 200;
+                    img.height = 300;
+                    ul.appendChild(img);
+                });
+
+                moviesContainer.appendChild(ul);
+            } else {
+                const p = document.createElement('p');
+                p.textContent = 'No films found.';
+                moviesContainer.appendChild(p);
+            }
+        };
+
+
+        async function handleSearch(event) {
+            event.preventDefault();
+            const title = document.getElementById('search-input-title').value;
+            const genre = localStorage.getItem('selectedGenre');
+            const releaseDate = document.getElementById('search-input-release-date').value;
+
+            let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}`;
+
+            if (title) {
+                const encodedTitle = encodeURIComponent(title);
+                url += `&query=${encodedTitle}`;
+            } else if (genre) {
+                try {
+                    const response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY_T}`);
+                    const data = await response.json();
+                    const genres = data.genres;
+                    console.log(`DATA >>>>>>`, data);
+                    const selectedGenre = genres.find(g => g.name.toLowerCase() === genre.toLowerCase());
+                    if (selectedGenre) {
+                        const genreId = selectedGenre.id;
+                        url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&with_genres=${genreId}`;
+                        if (releaseDate) {
+                            const encodedReleaseDate = encodeURIComponent(releaseDate);
+                            url += `&primary_release_date=${encodedReleaseDate}`;
+                        }
+                    } else {
+                        console.error('Invalid genre');
+                        return;
+                    }
+                } catch (error) {
+                    console.error(error);
+                    return;
+                }
+            } else {
+                console.log('No search criteria provided.');
+                return;
+            }
+
+            const movies = await searchMovies(url);
+            displayMovies(movies); // Render movies on the page
         }
+
+
     </script>
 
-    <div id="movies-container">
-
-        {{#if movies}}
-        <h2>Search Results</h2>
-        <ul>
-            {{#each movies}}
-            <li>{{this.title}}</li>
-            <li>{{this.release_date}}</li>
-            <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" width="200" height="300">
-            {{/each}}
-        </ul>
-        {{else}}
-        <p>No films found.</p>
-        {{/if}}
-    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
