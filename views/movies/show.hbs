@@ -62,20 +62,20 @@
     <body>
         <div class="col-10">
             <div class="container">
-                <div class="row">
+                <div class="row mt-5">
                     <div class="col-md-4">
                         <img src="https://image.tmdb.org/t/p/original/{{movie.poster_path}}" alt="{{movie.title}}"
                             class="img-fluid">
                     </div>
                     <div class="col-md-8">
-    
+                        
                         <h2>{{movie.title}}</h2>
                         <p><strong>Release Date:</strong> {{movie.release_date}}</p>
                         <p><strong>Overview:</strong> {{movie.overview}}</p>
                         <p><strong>Genres:</strong> {{#each movie.genres}}{{this.name}}{{#unless @last}},
                                 {{/unless}}{{/each}}
                         </p>
-                        {{#ifInArray ../watchList this.title}}
+                        {{#ifInArray watchList movie.title}}
                         <button class="btn btn-primary btn-custom" disabled>Added to Watch List</button>
                         {{else}}
                         <button class="btn btn-primary add-to-watchlist btn-custom" data-title="{{movie.title}}">Add
