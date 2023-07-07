@@ -18,6 +18,7 @@ const ProfileController = {
         // Only return the movie if it has a valid poster path
         if (movie && movie.poster_path) {
           return {
+            id: movie.id,
             title: movie.title,
             poster_path: movie.poster_path,
           };
