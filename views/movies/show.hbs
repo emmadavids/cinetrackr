@@ -26,8 +26,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Movies</title>
 
-    {{!--
-    <link rel="stylesheet" href="styles.css"> --}}
+    {{!-- <link rel="stylesheet" href="styles.css"> --}}
 </head>
 
 <body>
@@ -39,7 +38,6 @@
                     <a class="navbar-brand" href="sessions/new">
                         <img src="/images/logo.png" alt="Logo" width="100" height="40"
                             class="d-inline-block align-text-top">
-
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -55,7 +53,6 @@
                                 <input id="logout_button" type="submit" value="Log Out">
                             </form>
                         </div>
-
                     </div>
                 </div>
             </nav>
@@ -71,18 +68,18 @@
                             class="img-fluid">
                     </div>
                     <div class="col-md-8">
+    
                         <h2>{{movie.title}}</h2>
                         <p><strong>Release Date:</strong> {{movie.release_date}}</p>
                         <p><strong>Overview:</strong> {{movie.overview}}</p>
                         <p><strong>Genres:</strong> {{#each movie.genres}}{{this.name}}{{#unless @last}},
-                            {{/unless}}{{/each}}
+                                {{/unless}}{{/each}}
                         </p>
-                        {{#ifInArray ../watchList movie.id}}
+                        {{#ifInArray ../watchList this.title}}
                         <button class="btn btn-primary btn-custom" disabled>Added to Watch List</button>
                         {{else}}
-                        <button class="btn btn-primary add-to-watchlist btn-custom" data-movie-id="{{movie.id}}">Add to
-                            Watch
-                            List</button>
+                        <button class="btn btn-primary add-to-watchlist btn-custom" data-title="{{movie.title}}">Add
+                            to Watch List</button>
                         {{/ifInArray}}
                     </div>
                 </div>
@@ -99,14 +96,14 @@
                 const addToWatchListButton = document.querySelector(".add-to-watchlist");
 
                 addToWatchListButton.addEventListener("click", function (event) {
-                    const movieId = event.target.dataset.movieId;
+                    const title = event.target.dataset.title;
 
                     fetch("/movies/watchlist", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify({ movieId: movieId }),
+                        body: JSON.stringify({ title: title }),
                     })
                         .then(function (response) {
                             if (response.ok) {
