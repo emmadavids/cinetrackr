@@ -60,14 +60,18 @@ const getLatestPopularMovies = () => {
 
 
 
+
+
+
 const searchMovies = (title = "", releaseDate = "", genre = "") => {
 
   const encodedTitle = encodeURIComponent(title);
   let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
 
-  if (releaseDate) {
-    const encodedReleaseDate = encodeURIComponent(releaseDate);
-    url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_date.gte=2022-01-01&primary_release_date.lte=${encodedReleaseDate}`;
+  if (startDate && endDate) {
+    // const encodedReleaseDate = encodeURIComponent(releaseDate);
+    url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_date.gte=&${startDate}&primary_release_date.lte=${endDate}`;
+    console.log("URL HERE>>>>>>>>>>", url)
   }
 
   if (genre) {
