@@ -113,73 +113,128 @@ const searchMoviesByGenre = (genre) => {
 
 // UPDATED MOVIE FUNCTION
 
-const searchMovies = (title = "", year = "", genre = "") => {
+// const searchMovies = (title = "", year = "", genre = "") => {
 
-  const encodedTitle = encodeURIComponent(title);
-  let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
+//   const encodedTitle = encodeURIComponent(title);
+//   let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
 
-  if (year) {
-    const encodedYear = encodeURIComponent(year);
-    url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_year=${encodedYear}`;
-    console.log("URL HERE>>>>>>>>>>", url)
-  }
+//   if (year) {
+//     const encodedYear = encodeURIComponent(year);
+//     url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_year=${encodedYear}`;
+//     console.log("URL HERE>>>>>>>>>>", url)
+//   }
   
-  if (genre) {
-    // Fetch genre list
-    return fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY_T}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const genres = data.genres;
-        const selectedGenre = genres.find((g) => g.name.toLowerCase() === genre.toLowerCase());
+//   if (genre) {
+//     // Fetch genre list
+//     return fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY_T}`)
+//       .then((response) => response.json())
+//       .then((data) => {
+//         const genres = data.genres;
+//         const selectedGenre = genres.find((g) => g.name.toLowerCase() === genre.toLowerCase());
 
-        if (selectedGenre) {
-          const genreId = selectedGenre.id;
-          url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&with_genres=${genreId}`;
+//         if (selectedGenre) {
+//           const genreId = selectedGenre.id;
+//           url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&with_genres=${genreId}`;
 
-          if (releaseDate) {
-            url += `&primary_release_date.gte=${encodedReleaseDate}`;
+//           if (releaseDate) {
+//             url += `&primary_release_date.gte=${encodedReleaseDate}`;
+//           }
+//         }
+
+//         return fetch(url);
+//       })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         const movies = data.results;
+//         console.log(movies);
+//         return movies;
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//         return [];
+//       });
+//   } else {
+//     return fetch(url)
+//       .then((response) => response.json())
+//       .then((data) => {
+//         const movies = data.results;
+//         console.log(movies);
+//         return movies;
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//         return [];
+//       });
+//   }
+//   };
+  const searchMovies = (title = "", year = "", genre = "") => {
+
+    const encodedTitle = encodeURIComponent(title);
+    let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
+  
+    if (year) {
+      const encodedYear = encodeURIComponent(year);
+      url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_year=${encodedYear}`;
+      console.log("URL HERE>>>>>>>>>>", url)
+    }
+    
+    if (genre) {
+      // Fetch genre list
+      return fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY_T}`)
+        .then((response) => response.json())
+        .then((data) => {
+          const genres = data.genres;
+          const selectedGenre = genres.find((g) => g.name.toLowerCase() === genre.toLowerCase());
+  
+          if (selectedGenre) {
+            const genreId = selectedGenre.id;
+            url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&with_genres=${genreId}`;
+            if (releaseDate) {
+              url += `&primary_release_date.gte=${encodedReleaseDate}`;
+            }
           }
-        }
-
-        return fetch(url);
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        const movies = data.results;
-        console.log(movies);
-        return movies;
-      })
-      .catch((error) => {
-        console.error(error);
-        return [];
-      });
-  } else {
-    return fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        const movies = data.results;
-        console.log(movies);
-        return movies;
-      })
-      .catch((error) => {
-        console.error(error);
-        return [];
-      });
-  }
+  
+          return fetch(url);
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          const movies = data.results;
+          console.log(movies);
+          return movies;
+        })
+        .catch((error) => {
+          console.error(error);
+          return [];
+        });
+    } else {
+      return fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          const movies = data.results;
+          console.log(movies);
+          return movies;
+        })
+        .catch((error) => {
+          console.error(error);
+          return [];
+        });
+    }
+    };
+  
+  
+  
+  
+  
+  module.exports = {
+    searchMoviesByTitle,
+    searchMoviesByDateRange,
+    getLatestMovies,
+    getLatestPopularMovies,
+    searchMoviesByGenre,
+    searchMovies,
   };
-
-
-
-
-module.exports = {
-  searchMoviesByTitle,
-  searchMoviesByDateRange,
-  getLatestMovies,
-  getLatestPopularMovies,
-  searchMoviesByGenre,
-  searchMovies,
-};
-
+  
+  
 
 
 

@@ -134,6 +134,104 @@
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
+     const dropdownItems = document.getElementsByClassName('dropdown-item');
+  Array.from(dropdownItems).forEach(item => {
+    item.addEventListener('click', handleGenreSelection);
+  });
+
+  function handleGenreSelection(event) {
+    const selectedGenre = event.target.value;
+    const genreInput = document.getElementById('search-input-genre');
+    genreInput.value = selectedGenre;
+  }
+
+  function displayMovies(movies) {
+    const moviesContainer = document.getElementById('movies-container');
+    moviesContainer.innerHTML = ''; // Clear previous search results
+
+    if (movies.length > 0) {
+      const ul = document.createElement('ul');
+
+      movies.forEach(movie => {
+        const liTitle = document.createElement('li');
+        liTitle.textContent = movie.title;
+        ul.appendChild(liTitle);
+
+        const liReleaseDate = document.createElement('li');
+        liReleaseDate.textContent = movie.release_date;
+        ul.appendChild(liReleaseDate);
+
+        const img = document.createElement('img');
+        img.src = `https://image.tmdb.org/t/p/original/${movie.poster_path}`;
+        img.alt = movie.title;
+        img.width = 200;
+        img.height = 300;
+        ul.appendChild(img);
+      });
+
+      moviesContainer.appendChild(ul);
+    } else {
+      const p = document.createElement('p');
+      p.textContent = 'No films found.';
+      moviesContainer.appendChild(p);
+    }
+  }
+
+  async function handleSearch(event) {
+    event.preventDefault();
+    const title = document.getElementById('search-input-title').value;
+    const genre = document.getElementById('search-input-genre').value;
+    const releaseDate = document.getElementById('search-input-release_date').value;
+
+    let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}`;
+
+    if (title) {
+      const encodedTitle = encodeURIComponent(title);
+      url += `&query=${encodedTitle}`;
+    }if (genre) {
+                fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY_T}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const genres = data.genres;
+                        const selectedGenre = genres.find(g => g.name.toLowerCase() === genre.toLowerCase());
+                        if (selectedGenre) {
+                            const genreId = selectedGenre.id;
+                            url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&with_genres=${genreId}`;
+                            if (releaseDate) {
+                                const encodedReleaseDate = encodeURIComponent(releaseDate);
+                                url += `&primary_release_date=${encodedReleaseDate}`;
+                            }
+                            fetchMovies(url);
+                        } else {
+                            console.error('Invalid genre');
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+    
+        if (releaseDate) {
+          const encodedReleaseDate = encodeURIComponent(releaseDate);
+          url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_date=${encodedReleaseDate}`;
+        }
+    }
+    const movies = await searchMovies(url);
+    displayMovies(movies); // Render movies on the page
+  
+
+  const searchMovies = (url) => {
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const movies = data.results;
+        console.log(movies);
+        return movies;
+      })
+      .catch(error => {
+        console.error(error);
+        return [];
+      });
+  };
   document.addEventListener("DOMContentLoaded", function() {
     const addToWatchListButtons = document.querySelectorAll(".add-to-watchlist");
 
