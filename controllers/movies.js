@@ -51,14 +51,16 @@ const MoviesController = {
 
 
     SearchBy: async (req, res) => {
-        try {
-            const genre = req.body.genre;
-            const movies = await fetchfunctions.searchMoviesByGenre(genre);
-
-            res.render("movies/search", { movies });
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Internal server error");
+            try {
+                const title = req.body.title;
+                const releaseDate = req.body.release_date;
+                const genre = req.body.genre;
+                const movies = await fetchfunctions.searchMovies(title, releaseDate, genre);
+    
+                res.render("movies/search", { movies });
+            } catch (error) {
+                console.error(error);
+                res.status(500).send("Internal server error");
         }
     }
         };
