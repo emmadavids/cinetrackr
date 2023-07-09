@@ -50,12 +50,11 @@
         }
     </style>
 
-    </style>
+
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>My Movies</title>
-
 
 
 </head>
@@ -93,38 +92,60 @@
 
     <h1 class="text-center">Movies</h1>
     {{!search by title}}
-   
 
-            <div class="container-fluid py-3">
-                <div class="row justify-content-center">
-    <div class="col-md-6">
+
+    <div class="container-fluid py-3">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
                 <form action="/movies/search" method="post" class="d-flex">
-                        <div class="form-group flex-grow-1 me-2">
-                            <label for="search-input-title">Name</label>
-                            <input type="search" class="form-control" id="search-input-title" name="title"
-                                aria-describedby="search box" placeholder="Enter a movie name">
-                        </div>
-                        <div class="form-group me-2">
-                            <label for="search-input-genre">Genre</label>
-                            <input type="search" class="form-control" name="genre" id="search-input-genre"
-                                placeholder="Choose a genre">
-                        </div>
+                    <div class="form-group flex-grow-1 me-2">
+                        <label for="search-input-title">Name</label>
+                        <input type="search" class="form-control" id="search-input-title" name="title"
+                            aria-describedby="search box" placeholder="Enter a movie name">
+                    </div>
+                    <div class="form-group me-2">
+                        <select class="form-control" id="search-input-genre" name="genre">
+                                <option value="">Select Genre</option>
 
-                        <div class="form-group me-2">
+                            <option value="Action">Action</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Animation">Animation</option>
+                            <option value="Comedy">Comedy</option>
+                            <option value="Crime">Crime</option>
+                            <option value="Documentary">Documentary</option>
+                            <option value="Drama">Drama</option>
+                            <option value="Family">Family</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="History">History</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Music">Music</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Science Fiction">Science Fiction</option>
+                            <option value="TV Movie">TV Movie</option>
+                            <option value="Thriller">Thriller</option>
+                            <option value="War">War</option>
+                            <option value="Western">Western</option>
+                            <!-- Add more genre options as needed -->
+                        </select>
+                    </div>
+
+                    <div class="form-group me-2">
 
                         <label for="search-input-release_date">Release Year</label>
                         <input type="search" class="form-control" id="search-input-release_date" name="release_date"
-                            placeholder="Enter year"></div>
-                        <button type="submit" id="search-button" class="btn btn-primary">Search</button>
-                    
+                            placeholder="Enter year">
+                    </div>
+                    <button type="submit" id="search-button" class="btn btn-primary">Search</button>
+
                 </form>
-                </div>
             </div>
         </div>
+    </div>
 
 
 
- 
+
 
 
 
@@ -166,53 +187,3 @@
 </html>
 
 
-<script>
-        const API_KEY_T = '{{API_KEY_T}}';
-        const searchButton = document.getElementById('search-button');
-        searchButton.addEventListener('click', handleSearch);
-
-        function handleSearch() {
-            const title = document.getElementById('search-input-title').value;
-            const genre = document.getElementById('search-input-genre').value;
-            const releaseDate = document.getElementById('search-input-release_date').value;
-
-            const encodedTitle = encodeURIComponent(title);
-            let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
-
-            if (genre) {
-                fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY_T}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const genres = data.genres;
-                        console.log(genres);
-                        const selectedGenre = genres.find(g => g.name.toLowerCase() === genre.toLowerCase());
-                        if (selectedGenre) {
-                            const genreId = selectedGenre.id;
-                            url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&with_genres=${genreId}`;
-
-                            fetchMovies(url);
-                        } else {
-                            console.error('Invalid genre');
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            } else {
-                if (releaseDate) {
-                    const encodedReleaseDate = encodeURIComponent(releaseDate);
-                    url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_date=${encodedReleaseDate}`;
-                }
-                fetchMovies(url);
-            }
-        }
-
-        // Rest of the code remains the same...
-
-
-        function displayMovies(movies) {
-            const moviesContainer = document.getElementById('movies-container');
-            moviesContainer.innerHTML = ''; // Clear previous search results
-
-        }
-    </script>
