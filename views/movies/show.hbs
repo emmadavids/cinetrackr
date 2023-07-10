@@ -114,8 +114,13 @@
             <div class="container">
                 <div class="row mt-5">
                     <div class="col-md-4">
-                        <img src="https://image.tmdb.org/t/p/original/{{movie.poster_path}}" alt="{{movie.title}}"
+                        {{#if poster_path}}
+                        <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}"
                             class="img-fluid">
+                        {{else}}
+                        <img src="https://res.cloudinary.com/acebook-poke/image/upload/v1688999260/No_Image_Available_jvbpqq.jpg"
+                            alt="{{title}}" class="img-fluid">
+                        {{/if}}
                     </div>
                     {{!-- Movie details --}}
                     <div class="col-md-8">
@@ -126,11 +131,11 @@
                             {{/unless}}{{/each}}</p>
 
                         {{!-- Add to Watch List button --}}
-                        {{#ifInArray watchList movie.id}} 
+                        {{#ifInArray watchList movie.id}}
                         <button class="btn btn-primary btn-custom" disabled>Added to Watch List</button>
                         {{else}}
                         <button class="btn btn-primary add-to-watchlist btn-custom" data-movie-id="{{movie.id}}">Add to
-                            Watch List</button> 
+                            Watch List</button>
                         {{/ifInArray}}
                     </div>
 
