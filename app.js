@@ -70,6 +70,10 @@ handlebars.registerHelper("ifInArray", function (array, element, options) {
 	}
   });
 
+handlebars.registerHelper('wikiLink', function(name) {
+	const encodedName = encodeURIComponent(name);
+	return `https://en.wikipedia.org/wiki/${encodedName}`;
+  });
 
 // route setup
 app.use("/", homeRouter);
