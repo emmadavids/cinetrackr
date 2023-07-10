@@ -28,6 +28,7 @@ const MoviesController = {
             const movieId = req.params.id;
             const user = req.session.user;
             let watchList = [];
+            let reviews = [];
 
             if (user) {
                 const userData = await User.findById(user._id);
@@ -38,7 +39,7 @@ const MoviesController = {
 
             const movie = await fetchfunctions.getMovieById(movieId);
 
-            res.render("movies/show", { movie, user,  watchList });
+            res.render("movies/show", { movie, user,  watchList, reviews});
         } catch (error) {
             console.error(error);
             res.status(500).send("Internal server error");

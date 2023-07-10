@@ -59,6 +59,14 @@
         </div>
     </header>
 
+
+    {{#each reviews}}
+  <div class="review">
+    <h4>{{this.author}}</h4>
+    <p>{{this.review}}</p>
+  </div>
+{{/each}}
+
     <body>
         <div class="col-10">
             <div class="container">
@@ -89,14 +97,16 @@
         </div>
 
         </div>
-
+{{!-- Form for leaving a review starts here --}}
          <form action="/movies/{{ movie.id }}/reviews" method="POST">
-      <textarea class="w-100 mb-2 p-2" name="reviews" placeholder="Leave a review"></textarea>
+      <textarea class="w-100 mb-2 p-2" name="review" placeholder="Leave a review"></textarea>
       {{#if error}}
         <p style="color: red;">{{ error }}</p> 
       {{/if}}
+      <input type="hidden" name="movieId" value="{{ movie.id }}">
       <button class="submitButton btn btn-outline-primary shadow-sm px-4 mr-3" type="submit">Submit</button>
     </form>
+    
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>

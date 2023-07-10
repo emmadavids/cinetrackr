@@ -32,6 +32,7 @@ const UserSchema = new mongoose.Schema({
             {
               movie_id: Number,
               review: String,
+              author: String, //ADDED AUTHOR
               //rating: Number,
               }
           ], 

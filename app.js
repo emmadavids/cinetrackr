@@ -11,6 +11,7 @@ const sessionsRouter = require("./routes/sessions");
 const usersRouter = require("./routes/users");
 const moviesRouter = require("./routes/movies");
 const profileRouter = require("./routes/profile");
+
 const { handlebars } = require("hbs");
 const API_KEY_T = require('./tmdb_api_key');
 
