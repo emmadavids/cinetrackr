@@ -90,6 +90,14 @@
 
         </div>
 
+         <form action="/movies/{{ movie.id }}/reviews" method="POST">
+      <textarea class="w-100 mb-2 p-2" name="reviews" placeholder="Leave a review"></textarea>
+      {{#if error}}
+        <p style="color: red;">{{ error }}</p> 
+      {{/if}}
+      <button class="submitButton btn btn-outline-primary shadow-sm px-4 mr-3" type="submit">Submit</button>
+    </form>
+
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function () {

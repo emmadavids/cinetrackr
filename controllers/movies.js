@@ -26,7 +26,6 @@ const MoviesController = {
     async show(req, res) {
         try {
             const movieId = req.params.id;
-
             const user = req.session.user;
             let watchList = [];
 

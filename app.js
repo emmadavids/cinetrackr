@@ -76,7 +76,8 @@ app.use("/", homeRouter);
 app.use("/sessions", sessionsRouter);
 app.use("/users", usersRouter);
 app.use("/movies", sessionChecker, moviesRouter);
-app.use("/profile", profileRouter)
+app.use("/profile", profileRouter);
+//app.use("/:id/reviews", sessionChecker, moviesRouter);
 
 app.use(express.static('public', { 
 	setHeaders: (res, path) => {
