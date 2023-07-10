@@ -125,7 +125,7 @@ const searchMovies = (title = "", year = "", genre = "") => {
       return [];
     });
 
-  
+}
 
 
 
