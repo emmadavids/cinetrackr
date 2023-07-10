@@ -139,7 +139,7 @@
                 </div>
             </div>
 
-
+{{!-- Movie search results --}}
             <div class="col-10 mt-5" id="movies-container">
                 {{#if movies}}
                 <div class="col-10">
@@ -177,6 +177,43 @@
 
         </div>
     </div>
+{{!-- End of Movie search results --}}
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const addToWatchListButtons = document.querySelectorAll(".add-to-watchlist");
+
+            addToWatchListButtons.forEach(function (button) {
+                button.addEventListener("click", function (event) {
+                    const title = event.target.dataset.title;
+
+                    fetch("/movies/watchlist", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ title: title }),
+                    })
+                        .then(function (response) {
+                            if (response.ok) {
+                                event.target.disabled = true;
+                                event.target.textContent = "Added to Watch List";
+                            } else {
+                                console.error("Failed to add movie to watch list");
+                            }
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                        });
+                });
+            });
+        });
+    </script>
 
 </body>
 
