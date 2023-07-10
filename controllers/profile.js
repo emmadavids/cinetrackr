@@ -6,13 +6,11 @@ const ProfileController = {
     try {
       const user = await User.findById(req.session.user._id);
 
-      const moviesPromises = user.watch_list.map(async (movieTitle) => {
-        const encodedTitle = encodeURIComponent(movieTitle);
+      const moviesPromises = user.watch_list.map(async (movieId) => { // Changed variable name from `movieTitle` to `movieId`
         const response = await fetch(
-          `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`
+          `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY_T}` // Changed the API endpoint to fetch movie details by ID
         );
-        const data = await response.json();
-        const movie = data.results[0];
+        const movie = await response.json();
 
         // Only return the movie if it has a valid poster path
         if (movie && movie.poster_path) {
@@ -36,21 +34,21 @@ const ProfileController = {
 
   async removeFromWatchList(req, res) {
     try {
-      const { title } = req.body;
+      const { id } = req.body; // Changed from `title` to `id`
       const user = req.session.user;
-
-      if (user && title) {
+  
+      if (user && id) {
         const updatedUser = await User.findByIdAndUpdate(
           user._id,
-          { $pull: { watch_list: title } },
+          { $pull: { watch_list: id } }, // Changed from `title` to `id`
           { new: true }
         );
-
+  
         if (updatedUser) {
-          console.log(`Removed "${title}" from watch list for user: ${user._id}`);
+          console.log(`Removed movie with ID "${id}" from watch list for user: ${user._id}`);
         }
       }
-
+  
       res.redirect("/profile");
     } catch (error) {
       console.error(error);
