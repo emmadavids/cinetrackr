@@ -57,18 +57,26 @@ const getLatestPopularMovies = () => {
 
 // UPDATED MOVIE FUNCTION
 
-
-
-
-
-
+// const searchMoviesGenre = (url) => {
+//   return fetch(url)
+//       .then(response => response.json())
+//       .then(data => {
+//           const movies = data.results;
+//           console.log(movies);
+//           return movies;
+//       })
+//       .catch(error => {
+//           console.error(error);
+//           return [];
+//       });
+//     }
 
 const searchMovies = (title = "", releaseDate = "", genre = "") => {
 
   const encodedTitle = encodeURIComponent(title);
   let url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
 
-  if (startDate && endDate) {
+  if (releaseDate) {
     // const encodedReleaseDate = encodeURIComponent(releaseDate);
     url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY_T}&primary_release_date.gte=&${startDate}&primary_release_date.lte=${endDate}`;
     console.log("URL HERE>>>>>>>>>>", url)
@@ -124,4 +132,5 @@ module.exports = {
   getLatestMovies,
   getLatestPopularMovies,
   searchMovies,
+  //searchMoviesGenre
 };
