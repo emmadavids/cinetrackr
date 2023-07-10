@@ -3,25 +3,13 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        .search-container {
-            display: flex;
-            align-items: center;
-            width: 300px;
-            /*
-    Adjust the width as per your preference */
-            margin: 0 auto;
-            /* Centers the
-    search bar horizontally */
-        }
-
         .search-input {
             flex: 1;
             padding: 8px;
         }
 
         .search-button {
-            padding: 6px 6px;
-            height: 32px;
+            padding: 8px 12px;
         }
 
         .movie-item {
@@ -47,6 +35,12 @@
 
         .btn-custom {
             font-size: 0.75rem;
+        }
+
+        .sticky-container {
+            position: sticky;
+            top: 35%;
+            transform: translateY(-50%);
         }
     </style>
 
@@ -90,96 +84,100 @@
         </div>
     </header>
 
-    <h1 class="text-center">Movies</h1>
-
-    {{!search by title}}
-
-    <div class="container-fluid py-3">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form action="/movies/search" method="post" class="d-flex">
-                    <div class="form-group flex-grow-1 me-2">
-                        <label for="search-input-title">Name</label>
-                        <input type="search" class="form-control" id="search-input-title" name="title"
-                            aria-describedby="search box" placeholder="Enter a movie name">
-                    </div>
-                    <div class="form-group me-2">
-                        <select class="form-control" id="search-input-genre" name="genre">
-                                <option value="">Select Genre</option>
-
-                            <option value="Action">Action</option>
-                            <option value="Adventure">Adventure</option>
-                            <option value="Animation">Animation</option>
-                            <option value="Comedy">Comedy</option>
-                            <option value="Crime">Crime</option>
-                            <option value="Documentary">Documentary</option>
-                            <option value="Drama">Drama</option>
-                            <option value="Family">Family</option>
-                            <option value="Fantasy">Fantasy</option>
-                            <option value="History">History</option>
-                            <option value="Horror">Horror</option>
-                            <option value="Music">Music</option>
-                            <option value="Mystery">Mystery</option>
-                            <option value="Romance">Romance</option>
-                            <option value="Science Fiction">Science Fiction</option>
-                            <option value="TV Movie">TV Movie</option>
-                            <option value="Thriller">Thriller</option>
-                            <option value="War">War</option>
-                            <option value="Western">Western</option>
-                            <!-- Add more genre options as needed -->
-                        </select>
-                    </div>
-
-                    <div class="form-group me-2">
-
-                        <label for="search-input-release_date">Release Year</label>
-                        <input type="number" min="1894" class="form-control" id="search-input-release_date" name="release_date"
-                            placeholder="Enter year">
-                    </div>
-                    <button type="submit" id="search-button" class="btn btn-primary">Search</button>
 
 
-                </form>
-            </div>
-        </div>
-    </div>
+    <div class="container-fluid">
+        <div class="row">
 
 
-
-    <div id="movies-container mt-5">
-        {{#if movies}}
-        <div class="col-10">
-            <div class="container-fluid mt-5">
-                <div class="row">
-                    <div id="search-results-container" class="col-md-12 d-flex flex-wrap justify-content-center">
-                        {{#each movies}}
-                        <div class="col-md-2 movie-item">
-                            <div class="card">
-                                <a href="/movies/{{id}}"><img src="https://image.tmdb.org/t/p/original/{{poster_path}}"
-                                        alt="{{title}}" class="card-img-top"></a>
-                                <div class="card-body p-2">
-                                    <h5 class="card-title">{{title}}</h5>
-                                    {{#ifInArray ../watchList title}}
-                                    <button class="btn btn-primary btn-custom" disabled>Added to Watch List</button>
-                                    {{else}}
-                                    <button class="btn btn-primary add-to-watchlist btn-custom"
-                                        data-title="{{title}}">Add to Watch List</button>
-                                    {{/ifInArray}}
-                                </div>
+            <!-- Search by title -->
+            <div class="col-2 ">
+                <div class="sticky-container">
+                    <form action="/movies/search" method="post">
+                        <div class="search-container border rounded p-4">
+                            <div class="form-group">
+                                <label for="search-input-title">Name</label>
+                                <input type="search" class="form-control" id="search-input-title" name="title"
+                                    aria-describedby="search box" placeholder="Title">
                             </div>
+                            <div class="form-group">
+                                <label for="search-input-genre">Genre</label>
+                                <select class="form-control" id="search-input-genre" name="genre">
+                                    <option value="">Select Genre</option>
+
+                                    <option value="Action">Action</option>
+                                    <option value="Adventure">Adventure</option>
+                                    <option value="Animation">Animation</option>
+                                    <option value="Comedy">Comedy</option>
+                                    <option value="Crime">Crime</option>
+                                    <option value="Documentary">Documentary</option>
+                                    <option value="Drama">Drama</option>
+                                    <option value="Family">Family</option>
+                                    <option value="Fantasy">Fantasy</option>
+                                    <option value="History">History</option>
+                                    <option value="Horror">Horror</option>
+                                    <option value="Music">Music</option>
+                                    <option value="Mystery">Mystery</option>
+                                    <option value="Romance">Romance</option>
+                                    <option value="Science Fiction">Science Fiction</option>
+                                    <option value="TV Movie">TV Movie</option>
+                                    <option value="Thriller">Thriller</option>
+                                    <option value="War">War</option>
+                                    <option value="Western">Western</option>
+                                    <!-- Add more genre options as needed -->
+                                </select>
+                            </div>
+
+
+                            <label for="search-input-release_date">Release Year</label>
+                            <input type="number" min="1894" class="form-control" id="search-input-release_date"
+                                name="release_date" placeholder="Enter year">
+
+                            <button type="submit" id="search-button" class="btn btn-primary mt-3">Search</button>
                         </div>
-                        {{/each}}
-                    </div>
+                    </form>
                 </div>
             </div>
+
+
+            <div class="col-10 mt-5" id="movies-container">
+                {{#if movies}}
+                <div class="col-10">
+                    <div class="container-fluid mt-5">
+                        <div class="row">
+                            <div id="search-results-container"
+                                class="col-md-12 d-flex flex-wrap justify-content-center">
+                                {{#each movies}}
+                                <div class="col-md-auto movie-item">
+                                    <div class="card">
+                                        <a href="/movies/{{id}}"><img
+                                                src="https://image.tmdb.org/t/p/original/{{poster_path}}"
+                                                alt="{{title}}" class="card-img-top"></a>
+                                        <div class="card-body p-2">
+                                            <h5 class="card-title">{{title}}</h5>
+                                            {{#ifInArray ../watchList title}}
+                                            <button class="btn btn-primary btn-custom" disabled>Added to Watch
+                                                List</button>
+                                            {{else}}
+                                            <button class="btn btn-primary add-to-watchlist btn-custom"
+                                                data-title="{{title}}">Add to Watch List</button>
+                                            {{/ifInArray}}
+                                        </div>
+                                    </div>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{else}}
+                <p>No films found.</p>
+                {{/if}}
+            </div>
+
         </div>
-        {{else}}
-        <p>No films found.</p>
-        {{/if}}
     </div>
 
 </body>
 
 </html>
-
-
