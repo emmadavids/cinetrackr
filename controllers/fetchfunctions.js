@@ -4,7 +4,21 @@ const API_KEY_T = require('../tmdb_api_key')
 const fetch = require('node-fetch');
 
 
-const currentYear = new Date().getFullYear();
+
+
+//get movies by id
+
+async function getMovieById(movieId) {
+  try {
+    const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY_T}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to fetch movie details");
+  }
+}
 
 
 
@@ -110,9 +124,8 @@ const searchMovies = (title = "", year = "", genre = "") => {
       console.error(error);
       return [];
     });
-};
 
-
+  
 
 
 
@@ -120,8 +133,10 @@ module.exports = {
 
   getLatestMovies,
   getLatestPopularMovies,
-
+  getMovieById,
   searchMovies,
+
+
 };
 
 

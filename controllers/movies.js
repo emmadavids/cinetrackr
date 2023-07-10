@@ -5,23 +5,46 @@ const User = require("../models/user");
 const MoviesController = {
     async Index(req, res) {
         try {
-          const movies = await fetchfunctions.getLatestPopularMovies();
-          const user = req.session.user;
-          let watchList = [];
-    
-          if (user) {
-            const userData = await User.findById(user._id);
-            if (userData) {
-              watchList = userData.watch_list;
+            const movies = await fetchfunctions.getLatestPopularMovies();
+            const user = req.session.user;
+            let watchList = [];
+
+            if (user) {
+                const userData = await User.findById(user._id);
+                if (userData) {
+                    watchList = userData.watch_list;
+                }
             }
-          }
-    
-          res.render("movies/index", { movies, user, watchList });
+
+            res.render("movies/index", { movies, user, watchList });
         } catch (error) {
-          console.error(error);
-          res.render("movies/index", { movies: [], user: null, watchList: [] });
+            console.error(error);
+            res.render("movies/index", { movies: [], user: null, watchList: [] });
         }
-      },
+    },
+
+    async show(req, res) {
+        try {
+            const movieId = req.params.id;
+
+            const user = req.session.user;
+            let watchListForMoviePg = [];
+
+            if (user) {
+                const userData = await User.findById(user._id);
+                if (userData) {
+                    watchListForMoviePg = userData.watch_list;
+                }
+            }
+
+            const movie = await fetchfunctions.getMovieById(movieId);
+
+            res.render("movies/show", { movie, user });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Internal server error");
+        }
+    },
 
     async addToWatchList(req, res) {
         try {
@@ -49,8 +72,7 @@ const MoviesController = {
 
 
 
-
-    SearchBy: async (req, res) => {
+        SearchBy: async (req, res) => {
             try {
                 const title = req.body.title;
                 const releaseDate = req.body.release_date;
@@ -61,9 +83,11 @@ const MoviesController = {
             } catch (error) {
                 console.error(error);
                 res.status(500).send("Internal server error");
+            }
         }
-    }
-        };
+    };
+    
+
 
   
 
