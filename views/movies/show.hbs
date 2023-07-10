@@ -20,52 +20,54 @@
         padding: 8px 12px;
     }
 
-{{!-- //cast stuff  --}}
+        {
+            {
+            !-- //cast stuff  --}}
 
-    .cast-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-    }
+            .cast-list {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
 
-    .cast-card {
-        width: 180px;
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
+            .cast-card {
+                width: 180px;
+                margin: 10px;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
 
-    .cast-image img {
-        width: 110px;
-        height: 160px;
-        object-fit: cover;
-        border-radius: 4px;
-    }
+            .cast-image img {
+                width: 110px;
+                height: 160px;
+                object-fit: cover;
+                border-radius: 4px;
+            }
 
-    .cast-details h3 {
-        font-size: 16px;
-        margin-top: 10px;
-    }
+            .cast-details h3 {
+                font-size: 16px;
+                margin-top: 10px;
+            }
 
-    .cast-details p {
-        font-size: 14px;
-        color: #666;
-        margin-top: 5px;
-    }
+            .cast-details p {
+                font-size: 14px;
+                color: #666;
+                margin-top: 5px;
+            }
 
-    .wiki-link {
-        text-decoration: none;
-        color: #000;
-        transition: color 0.3s;
-    }
+            .wiki-link {
+                text-decoration: none;
+                color: #000;
+                transition: color 0.3s;
+            }
 
-    .wiki-link:hover {
-        color: #666;
-        text-decoration: underline;
-    }
+            .wiki-link:hover {
+                color: #666;
+                text-decoration: underline;
+            }
 </style>
 
 <head>
@@ -115,50 +117,52 @@
                         <img src="https://image.tmdb.org/t/p/original/{{movie.poster_path}}" alt="{{movie.title}}"
                             class="img-fluid">
                     </div>
+                    {{!-- Movie details --}}
                     <div class="col-md-8">
-
                         <h2>{{movie.title}}</h2>
                         <p><strong>Release Date:</strong> {{movie.release_date}}</p>
                         <p><strong>Overview:</strong> {{movie.overview}}</p>
                         <p><strong>Genres:</strong> {{#each movie.genres}}{{this.name}}{{#unless @last}},
-                            {{/unless}}{{/each}}
-                        </p>
-                         {{!--
-    cast stuff --}}
-                        <div class="movie-cast-section">
-                            <h3>Cast</h3>
-                            <ul>
-                                <div class="cast-list">
-                                    {{#each cast}}
-                                    <div class="cast-card">
-                                        <div class="cast-image">
-                                            {{#if profile_path}}
-                                            <img src="https://image.tmdb.org/t/p/w300{{profile_path}}" alt="{{name}}">
-                                            {{else}}
-                                            <img src="https://res.cloudinary.com/acebook-poke/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688994618/default_huiwcn.jpg"
-                                                alt="{{name}}">
-                                            {{/if}}
-                                        </div>
-                                        <div class="cast-details">
-                                            <a href="{{wikiLink name}}" class="wiki-link" target="_blank"
-                                                rel="noopener noreferrer">{{name}}</a>
-                                            <p>Character: {{character}}</p>
-                                        </div>
-                                    </div>
-                                    {{/each}}
-                                </div>
-                            </ul>
-                        </div>
-                        {{#ifInArray watchList movie.title}}
-                        <button class="btn btn-primary btn-custom" disabled>Added to Watch List</button><br>
-                        {{else}}
-                        <button class="btn btn-primary add-to-watchlist btn-custom" data-title="{{movie.title}}">Add
-                            to Watch List</button>
-                        {{/ifInArray}}
+                            {{/unless}}{{/each}}</p>
 
+                        {{!-- Add to Watch List button --}}
+                        {{#ifInArray watchList movie.id}} 
+                        <button class="btn btn-primary btn-custom" disabled>Added to Watch List</button>
+                        {{else}}
+                        <button class="btn btn-primary add-to-watchlist btn-custom" data-movie-id="{{movie.id}}">Add to
+                            Watch List</button> 
+                        {{/ifInArray}}
                     </div>
+
+                    {{!--cast stuff --}}
+                    <div class="movie-cast-section">
+                        <h3>Cast</h3>
+                        <ul>
+                            <div class="cast-list">
+                                {{#each cast}}
+                                <div class="cast-card">
+                                    <div class="cast-image">
+                                        {{#if profile_path}}
+                                        <img src="https://image.tmdb.org/t/p/w300{{profile_path}}" alt="{{name}}">
+                                        {{else}}
+                                        <img src="https://res.cloudinary.com/acebook-poke/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1688994618/default_huiwcn.jpg"
+                                            alt="{{name}}">
+                                        {{/if}}
+                                    </div>
+                                    <div class="cast-details">
+                                        <a href="{{wikiLink name}}" class="wiki-link" target="_blank"
+                                            rel="noopener noreferrer">{{name}}</a>
+                                        <p>Character: {{character}}</p>
+                                    </div>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
+        </div>
         </div>
 
         </div>
@@ -170,14 +174,14 @@
                 const addToWatchListButton = document.querySelector(".add-to-watchlist");
 
                 addToWatchListButton.addEventListener("click", function (event) {
-                    const title = event.target.dataset.title;
+                    const movieId = event.target.dataset.movieId;
 
                     fetch("/movies/watchlist", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify({ title: title }),
+                        body: JSON.stringify({ movieId: movieId }),
                     })
                         .then(function (response) {
                             if (response.ok) {

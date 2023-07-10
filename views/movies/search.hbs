@@ -161,13 +161,15 @@
                                         </a>
                                         <div class="card-body p-2">
                                             <h5 class="card-title">{{title}}</h5>
-                                            {{#ifInArray ../watchList title}}
+                                            {{#ifInArray ../watchList id}} <!-- Changed from 'title' to 'id' -->
                                             <button class="btn btn-primary btn-custom" disabled>Added to Watch
                                                 List</button>
                                             {{else}}
                                             <button class="btn btn-primary add-to-watchlist btn-custom"
-                                                data-title="{{title}}">Add to Watch
-                                                List</button>
+
+                                                data-movie-id="{{id}}">Add to Watch List</button>
+                                            <!-- Changed from 'title' to 'id' -->
+
                                             {{/ifInArray}}
 
                                         </div>
@@ -198,14 +200,14 @@
 
             addToWatchListButtons.forEach(function (button) {
                 button.addEventListener("click", function (event) {
-                    const title = event.target.dataset.title;
+                    const movieId = event.target.dataset.movieId;
 
                     fetch("/movies/watchlist", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify({ title: title }),
+                        body: JSON.stringify({ movieId: movieId }),
                     })
                         .then(function (response) {
                             if (response.ok) {
