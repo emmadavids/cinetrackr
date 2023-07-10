@@ -1,7 +1,29 @@
 body {
-    background-color: rgb(238,240,243);
+
+    background-image: url('../images/The_revenant.webp');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .signup-box {
     margin-top: 100px;
 }
+
+.btn-custom {
+    background-color: #314850;
+    color: white;
+}
+.btn-custom:hover {
+    background-color: #53a482; 
+    color: #000000; 
+}
+
+.signup-box input::placeholder {
+    opacity: 0.5;
+}
+
+.text-link {
+    color: rgb(5, 89, 117);
+}
+

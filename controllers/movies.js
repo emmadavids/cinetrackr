@@ -78,8 +78,17 @@ const MoviesController = {
                 const releaseDate = req.body.release_date;
                 const genre = req.body.genre;
                 const movies = await fetchfunctions.searchMovies(title, releaseDate, genre);
-    
-                res.render("movies/search", { movies });
+                const user = req.session.user;
+            let watchList = [];
+
+            if (user) {
+                const userData = await User.findById(user._id);
+                if (userData) {
+                    watchList = userData.watch_list;
+                }
+            }
+
+                res.render("movies/search", { movies, watchList });
             } catch (error) {
                 console.error(error);
                 res.status(500).send("Internal server error");
