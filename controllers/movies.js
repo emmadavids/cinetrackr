@@ -26,7 +26,6 @@ const MoviesController = {
     async show(req, res) {
         try {
             const movieId = req.params.id;
-
             const user = req.session.user;
             let watchList = [];
 
@@ -38,8 +37,9 @@ const MoviesController = {
             }
 
             const movie = await fetchfunctions.getMovieById(movieId);
+            const cast = await fetchfunctions.getMovieCast(movieId); // Fetch cast information
 
-            res.render("movies/show", { movie, user,  watchList });
+            res.render("movies/show", { movie, user, watchList, cast }); // Pass cast data to the template
         } catch (error) {
             console.error(error);
             res.status(500).send("Internal server error");

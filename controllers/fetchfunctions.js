@@ -129,12 +129,24 @@ const searchMovies = (title = "", year = "", genre = "") => {
 
 
 
+async function getMovieCast(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY_T}`;
+
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(data)
+  return data.cast;
+}
+
+
+
 module.exports = {
 
   getLatestMovies,
   getLatestPopularMovies,
   getMovieById,
   searchMovies,
+  getMovieCast
 
 
 };
