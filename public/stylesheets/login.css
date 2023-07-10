@@ -1,0 +1,34 @@
+body {
+    background-image: url('../images/The_revenant.webp');
+    background-size: 100%;
+}
+
+h4 {
+    color: rgb(240, 234, 234);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: 'Julius Sans One', sans-serif;
+    font-size: 20px;
+}
+
+h1 {
+    color: rgb(240, 234, 234);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: 'Jomhuria', cursive;
+    font-size: 100px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: normal;
+}
+
+.btn-custom {
+    background-color: #314850;
+    color: white;
+}
+.btn-custom:hover {
+    background-color: #53a482; 
+    color: #000000; 
+}
+.logo{
+    height: 70px;
+    width: 70px;
+}
