@@ -23,5 +23,7 @@ body {
     opacity: 0.5;
 }
 
-
+.text-link {
+    color: rgb(5, 89, 117);
+}
 
