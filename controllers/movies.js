@@ -71,32 +71,6 @@ const MoviesController = {
     },
 
 
-    // Render the view with an empty movies array on error
-    SearchByTitle: async (req, res) => {
-        try {
-            const title = req.body.title;
-            const movies = await fetchfunctions.searchMoviesByTitle(title);
-
-            res.render("movies/search", { movies });
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Internal server error");
-        }
-    },
-
-    SearchByGenre: async (req, res) => {
-        try {
-            const genre = req.body.genre;
-            const movies = await fetchfunctions.searchMoviesByGenre(genre);
-
-            res.render("movies/search", { movies });
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Internal server error");
-        }
-
-    },
-
 
         SearchBy: async (req, res) => {
             try {
@@ -113,6 +87,9 @@ const MoviesController = {
         }
     };
     
+
+
+  
 
 
 module.exports = MoviesController;
