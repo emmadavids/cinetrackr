@@ -1,5 +1,5 @@
 body {
-    background-image: url('The_revenant.webp');
+    background-image: url('../images/The_revenant.webp');
     background-size: 100%;
 }
 
@@ -27,4 +27,8 @@ h1 {
 .btn-custom:hover {
     background-color: #53a482; 
     color: #000000; 
+}
+.logo{
+    height: 70px;
+    width: 70px;
 }
