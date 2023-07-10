@@ -1,11 +1,10 @@
-
-const API_KEY_T = require('../tmdb_api_key')
+const API_KEY_T = require('../tmdb_api_key');
 const User = require("../models/user");
 
 const ProfileController = {
   Index: async (req, res) => {
     try {
-      const user = await User.findById(req.session.user._id); 
+      const user = await User.findById(req.session.user._id);
 
       const moviesPromises = user.watch_list.map(async (movieTitle) => {
         const encodedTitle = encodeURIComponent(movieTitle);
@@ -32,6 +31,30 @@ const ProfileController = {
     } catch (error) {
       console.error(error);
       res.render('error');
+    }
+  },
+
+  async removeFromWatchList(req, res) {
+    try {
+      const { title } = req.body;
+      const user = req.session.user;
+
+      if (user && title) {
+        const updatedUser = await User.findByIdAndUpdate(
+          user._id,
+          { $pull: { watch_list: title } },
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log(`Removed "${title}" from watch list for user: ${user._id}`);
+        }
+      }
+
+      res.redirect("/profile");
+    } catch (error) {
+      console.error(error);
+      res.sendStatus(500);
     }
   },
 };

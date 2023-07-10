@@ -64,7 +64,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <a href="../profile" class="text-decoration-none">My profile</a>
-          <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Films</a>
+          <a class="new-post-link text-decoration-none ps-4" href="/movies">Films</a>
           <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Shows</a>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
@@ -90,9 +90,10 @@
               <div class="form-group">
                 <label for="search-input-title">Name</label>
                 <input type="search" class="form-control" id="search-input-title" name="title"
-                  aria-describedby="search box" placeholder="title">
+                  aria-describedby="search box" placeholder="Title">
               </div>
               <div class="form-group">
+                  <label for="search-input-genre">Genre</label>
                 <select class="form-control" id="search-input-genre" name="genre">
                   <option value="">Select Genre</option>
 
@@ -124,7 +125,7 @@
               <input type="number" min="1894" class="form-control" id="search-input-release_date" name="release_date"
                 placeholder="Enter year">
 
-              <button type="submit" id="search-button" class="btn btn-primary">Search</button>
+              <button type="submit" id="search-button" class="btn btn-primary mt-3">Search</button>
             </div>
           </form>
         </div>
@@ -139,7 +140,7 @@
               {{#each movies}}
               <div class="col-md-auto movie-item">
                 <div class="card">
-                  <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" class="card-img-top">
+                  <a href="/movies/{{id}}"><img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}" class="card-img-top"></a>
                   <div class="card-body p-2">
                     <h5 class="card-title ">{{title}}</h5>
                     {{#ifInArray ../watchList title}}
