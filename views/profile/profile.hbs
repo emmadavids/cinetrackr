@@ -76,8 +76,13 @@
           <li>
             <div class="movie-item col-md-auto">
               <div class="card mx-4">
-                <a href="/movies/{{id}}"><img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}"
-                    class="card-img-top"></a>
+                <a href="/movies/{{id}}">    {{#if poster_path}}
+                <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}"
+                  class="card-img-top">
+                {{else}}
+                <img src="https://res.cloudinary.com/acebook-poke/image/upload/v1688999260/No_Image_Available_jvbpqq.jpg"
+                  alt="{{title}}" class="card-img-top">
+                {{/if}}</a>
                 <div class="card-body p-2">
                   <h5 class="card-title">{{title}}</h5>
                   <form class="remove-form" action="/profile/remove" method="POST">
