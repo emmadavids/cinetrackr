@@ -13,6 +13,13 @@ async function getMovieById(movieId) {
     const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY_T}`;
     const response = await fetch(url);
     const data = await response.json();
+
+     // Fetch the user score from the data and convert it to an integer
+    const userScore = Math.round(data.vote_average * 10);
+
+    // Add the userScore to the movie object
+    data.userScore = userScore;
+
     return data;
   } catch (error) {
     console.error(error);
@@ -74,7 +81,7 @@ const getLatestPopularMovies = () => {
 
 const searchMovies = (title = "", year = "", genre = "") => {
   let url = "";
-  
+
   if (title) {
     const encodedTitle = encodeURIComponent(title);
     url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY_T}&query=${encodedTitle}`;
@@ -113,7 +120,7 @@ const searchMovies = (title = "", year = "", genre = "") => {
     console.error('No search parameters provided');
     return [];
   }
-  
+
   return fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -129,12 +136,45 @@ const searchMovies = (title = "", year = "", genre = "") => {
 
 
 
+
+async function getMovieCast(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY_T}`;
+
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(data)
+  return data.cast;
+}
+
+
+async function getMovieTrailerUrl(movieId) {
+  try {
+    const url = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY_T}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const trailers = data.results.filter(trailer => trailer.type === 'Trailer');
+    if (trailers.length > 0) {
+      return `https://www.youtube.com/embed/${trailers[0].key}`;
+    } else {
+      return ''; // No trailer available
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to fetch movie trailer URL");
+  }
+}
+
+
+
+
 module.exports = {
 
   getLatestMovies,
   getLatestPopularMovies,
   getMovieById,
   searchMovies,
+  getMovieCast,
+  getMovieTrailerUrl
 
 
 };

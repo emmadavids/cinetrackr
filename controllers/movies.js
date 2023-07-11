@@ -25,46 +25,50 @@ const MoviesController = {
 
     async show(req, res) {
         try {
-            const movieId = req.params.id;
-            const user = req.session.user;
-            let watchList = [];
-            
-
-            if (user) {
-                const userData = await User.findById(user._id);
-                if (userData) {
-                    watchList = userData.watch_list;
-                }
+          const movieId = req.params.id;
+          const user = req.session.user;
+          let watchList = [];
+    
+          if (user) {
+            const userData = await User.findById(user._id);
+            if (userData) {
+              watchList = userData.watch_list;
             }
-
-            const movie = await fetchfunctions.getMovieById(movieId);
+          }
+           const movie = await fetchfunctions.getMovieById(movieId);
             const users = await User.find({ "reviews.movieId": movieId }, { reviews: 1 });
             const reviews = users.map(user => user.reviews).flat().reverse();
                   
+    
+          
+          const cast = await fetchfunctions.getMovieCast(movieId);
+          const trailerUrl = await fetchfunctions.getMovieTrailerUrl(movieId);
+    
+          res.render("movies/show", { movie, user, watchList, reviews, cast, trailerUrl, userScore: movie.userScore });
 
-
-
-            res.render("movies/show", { movie, user,  watchList, reviews});
         } catch (error) {
-            console.error(error);
-            res.status(500).send("Internal server error");
+          console.error(error);
+          res.status(500).send("Internal server error");
         }
-    },
+      },
+
+    
+
 
     async addToWatchList(req, res) {
         try {
-            const { title } = req.body;
+            const { movieId } = req.body; // Changed from 'title' to 'movieId'
             const user = req.session.user;
 
-            if (user && title) {
+            if (user && movieId) {
                 const updatedUser = await User.findByIdAndUpdate(
                     user._id,
-                    { $addToSet: { watch_list: title } },
+                    { $addToSet: { watch_list: movieId } }, // Changed from 'title' to 'movieId'
                     { new: true }
                 );
 
                 if (updatedUser) {
-                    console.log(`Added "${title}" to watch list for user: ${user._id}`);
+                    console.log(`Added movie with ID "${movieId}" to watch list for user: ${user._id}`);
                 }
             }
 
@@ -77,24 +81,33 @@ const MoviesController = {
 
 
 
-        SearchBy: async (req, res) => {
-            try {
-                const title = req.body.title;
-                const releaseDate = req.body.release_date;
-                const genre = req.body.genre;
-                const movies = await fetchfunctions.searchMovies(title, releaseDate, genre);
-    
-                res.render("movies/search", { movies });
-            } catch (error) {
-                console.error(error);
-                res.status(500).send("Internal server error");
+    SearchBy: async (req, res) => {
+        try {
+            const title = req.body.title;
+            const releaseDate = req.body.release_date;
+            const genre = req.body.genre;
+            const movies = await fetchfunctions.searchMovies(title, releaseDate, genre);
+            const user = req.session.user;
+            let watchList = [];
+
+            if (user) {
+                const userData = await User.findById(user._id);
+                if (userData) {
+                    watchList = userData.watch_list;
+                }
             }
-        },
-    };
-    
+
+            res.render("movies/search", { movies, watchList });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send("Internal server error");
+        }
+    },
+};
 
 
-  
+
+
 
 
 module.exports = MoviesController;
