@@ -35,11 +35,20 @@ const MoviesController = {
               watchList = userData.watch_list;
             }
           }
-      
+
           const movie = await fetchfunctions.getMovieById(movieId);
-          const users = await User.find({ "reviews.movieId": movieId }, { reviews: 1 });
-          const reviews = users.map(user => user.reviews).flat().reverse();
-      
+    console.log("MOVIES>>>", movie);
+    const users = await User.find({ "reviews.movieId": movieId });
+    console.log("USERS WITH THAT MOVIE REVIEWED>>>", users);
+    const reviews = users.reduce((acc, user) => {
+      const filteredReviews = user.reviews.filter(review => review.movieId.toString() === movieId.toString());
+      return acc.concat(filteredReviews);
+    }, []).reverse();
+    console.log("REVIEWS>>>", reviews);
+                  
+    
+          
+
           const cast = await fetchfunctions.getMovieCast(movieId);
           const trailerUrl = await fetchfunctions.getMovieTrailerUrl(movieId);
       
