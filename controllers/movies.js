@@ -25,26 +25,30 @@ const MoviesController = {
 
     async show(req, res) {
         try {
-            const movieId = req.params.id;
-            const user = req.session.user;
-            let watchList = [];
-
-            if (user) {
-                const userData = await User.findById(user._id);
-                if (userData) {
-                    watchList = userData.watch_list;
-                }
+          const movieId = req.params.id;
+          const user = req.session.user;
+          let watchList = [];
+    
+          if (user) {
+            const userData = await User.findById(user._id);
+            if (userData) {
+              watchList = userData.watch_list;
             }
-
-            const movie = await fetchfunctions.getMovieById(movieId);
-            const cast = await fetchfunctions.getMovieCast(movieId); // Fetch cast information
-
-            res.render("movies/show", { movie, user, watchList, cast }); // Pass cast data to the template
+          }
+    
+          const movie = await fetchfunctions.getMovieById(movieId);
+          const cast = await fetchfunctions.getMovieCast(movieId);
+          const trailerUrl = await fetchfunctions.getMovieTrailerUrl(movieId);
+    
+          res.render("movies/show", { movie, user, watchList, cast, trailerUrl, userScore: movie.userScore });
         } catch (error) {
-            console.error(error);
-            res.status(500).send("Internal server error");
+          console.error(error);
+          res.status(500).send("Internal server error");
         }
-    },
+      },
+
+    
+
 
     async addToWatchList(req, res) {
         try {
