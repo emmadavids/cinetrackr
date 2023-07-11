@@ -28,30 +28,40 @@ const MoviesController = {
           const movieId = req.params.id;
           const user = req.session.user;
           let watchList = [];
-    
+      
           if (user) {
             const userData = await User.findById(user._id);
             if (userData) {
               watchList = userData.watch_list;
             }
           }
-           const movie = await fetchfunctions.getMovieById(movieId);
-            const users = await User.find({ "reviews.movieId": movieId }, { reviews: 1 });
-            const reviews = users.map(user => user.reviews).flat().reverse();
-                  
-    
-          
+      
+          const movie = await fetchfunctions.getMovieById(movieId);
+          const users = await User.find({ "reviews.movieId": movieId }, { reviews: 1 });
+          const reviews = users.map(user => user.reviews).flat().reverse();
+      
           const cast = await fetchfunctions.getMovieCast(movieId);
           const trailerUrl = await fetchfunctions.getMovieTrailerUrl(movieId);
-    
-          res.render("movies/show", { movie, user, watchList, reviews, cast, trailerUrl, userScore: movie.userScore });
-
+      
+          const firstSixActors = cast.slice(0, 6);
+          const remainingActors = cast.slice(6);
+      
+          res.render("movies/show", {
+            movie,
+            user,
+            watchList,
+            reviews,
+            firstSixActors,
+            remainingActors,
+            trailerUrl,
+            userScore: movie.userScore
+          });
         } catch (error) {
           console.error(error);
           res.status(500).send("Internal server error");
         }
       },
-
+      
     
 
 
