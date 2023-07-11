@@ -4,23 +4,32 @@ const fetchfunctions = require('./fetchfunctions')
 
 
 const ReviewController = {
-  AddReview: (req, res) => {
+
+  // FetchInfo: async (req, res) => {
+  //   const cast = await fetchfunctions.getMovieCast(movieId);
+  //   const trailerUrl = await fetchfunctions.getMovieTrailerUrl(movieId);
+  //   const movie = await fetchfunctions.getMovieById(movieId)
+  // },
+
+
+    AddReview: async (req, res) => {
       const userId = req.session.user._id;
       const { review, movieId } = req.body;
-  
-
+      const cast = await fetchfunctions.getMovieCast(movieId);
+      const trailerUrl = await fetchfunctions.getMovieTrailerUrl(movieId);
+    
       if (!review || !movieId) {
         const error = "Please enter a review.";
         return User.findById(userId)
-        .then((user) => {
-          return fetchfunctions.getMovieById(movieId)
-            .then((movie) => {
-              res.render("movies/show", { user, movie, error });
-            });
-        })
-        .catch((err) => {
-          console.log(err);
-
+          .then((user) => {
+            return fetchfunctions.getMovieById(movieId)
+              .then((movie) => {
+                res.render("movies/show", { user, movie, cast, trailerUrl, userScore: movie.userScore, error });
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.render("movies/show");
         });
     }
 
