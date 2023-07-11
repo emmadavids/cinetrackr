@@ -14,8 +14,8 @@ async function getMovieById(movieId) {
     const response = await fetch(url);
     const data = await response.json();
 
-    // Fetch the user score from the data and convert it to a percentage
-    const userScore = data.vote_average * 10;
+     // Fetch the user score from the data and convert it to an integer
+    const userScore = Math.round(data.vote_average * 10);
 
     // Add the userScore to the movie object
     data.userScore = userScore;
