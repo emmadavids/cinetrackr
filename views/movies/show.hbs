@@ -250,12 +250,12 @@
             <div class="container">
                 <div class="row mt-5">
                     <div class="col-md-4">
-                        {{#if poster_path}}
-                        <img src="https://image.tmdb.org/t/p/original/{{poster_path}}" alt="{{title}}"
+                        {{#if movie.poster_path}}
+                        <img src="https://image.tmdb.org/t/p/original/{{movie.poster_path}}" alt="{{movie.title}}"
                             class="img-fluid">
                         {{else}}
                         <img src="https://res.cloudinary.com/acebook-poke/image/upload/v1688999260/No_Image_Available_jvbpqq.jpg"
-                            alt="{{title}}" class="img-fluid">
+                            alt="{{movie.title}}" class="img-fluid">
                         {{/if}}
                     </div>
                     {{!-- Movie details --}}
