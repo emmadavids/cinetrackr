@@ -1,37 +1,40 @@
 const User = require('../models/user');
+const fetchfunctions = require('./fetchfunctions')
 
 
 
 const ReviewController = {
   AddReview: (req, res) => {
       const userId = req.session.user._id;
-      console.log(userId);
       const { review, movieId } = req.body;
   
-      console.log({review, movieId});
 
-      // if (!review || !Array.isArray(review)) {
-      //   const error = "Please enter a review.";
-      //   return User.findById(userId)
-      //     .then((user) => {
-      //       res.render("movies/show", { user, error });
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //       res.render("error"); // Render an error page or handle the error in an appropriate way
-      //     });
-      //   }
+      if (!review || !movieId) {
+        const error = "Please enter a review.";
+        return User.findById(userId)
+        .then((user) => {
+          return fetchfunctions.getMovieById(movieId)
+            .then((movie) => {
+              res.render("movies/show", { user, movie, error });
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+
+        });
+    }
 
         User.findById(userId)
             
         .then((user) => {
-          console.log(user);   
           user.reviews = user.reviews || [];
           const author = `${user.firstName} ${user.lastName}`
-          const newReview = { movieId, review, author }; //ADDED MOVIEID TO NEW REVIEW
-          console.log(newReview);
+          const movieId = req.params.id;
+          const newReview = { movieId, review, author}; //ADDED MOVIEID TO NEW REVIEW
+          user.timePosted = new Date();
          
-          user.reviews.unshift(newReview)
+        user.reviews.push(newReview)
+ 
           return user.save(); 
         })  
         .then(() => res.redirect(`/movies/${movieId}`))

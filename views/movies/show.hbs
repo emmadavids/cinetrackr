@@ -59,14 +59,6 @@
         </div>
     </header>
 
-
-    {{#each reviews}}
-  <div class="review">
-    <h4>{{this.author}}</h4>
-    <p>{{this.review}}</p>
-  </div>
-{{/each}}
-
     <body>
         <div class="col-10">
             <div class="container">
@@ -107,6 +99,13 @@
       <button class="submitButton btn btn-outline-primary shadow-sm px-4 mr-3" type="submit">Submit</button>
     </form>
     
+    {{#each reviews}}
+  <div class="review">
+    <h4>{{this.author}}</h4>
+    <p>{{this.review}}</p>
+    <span class="time-comment">{{ timeAgo this.timePosted }}</span>
+  </div>
+{{/each}}
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>

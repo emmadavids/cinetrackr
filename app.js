@@ -14,6 +14,8 @@ const profileRouter = require("./routes/profile");
 
 const { handlebars } = require("hbs");
 const API_KEY_T = require('./tmdb_api_key');
+const moment = require("./public/javascripts/moment.min");
+
 
 
 const app = express();
@@ -106,7 +108,7 @@ app.use((err, req, res) => {
 	res.render("error");
 });
 
-// handlebars.registerHelper("timeAgo", (date) => moment(date).fromNow());
+handlebars.registerHelper("timeAgo", (date) => moment(date).fromNow());
 
 handlebars.registerHelper('jsonStringify', (context) => {
 	return JSON.stringify(context);

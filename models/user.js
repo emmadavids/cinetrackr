@@ -30,10 +30,10 @@ const UserSchema = new mongoose.Schema({
     reviews: {
         type: [
             {
-              movie_id: Number,
+              movieId: Number,
               review: String,
-              author: String, //ADDED AUTHOR
-              //rating: Number,
+              author: String, 
+              timePosted: { type : Date, default: Date.now },
               }
           ], 
           default: [],

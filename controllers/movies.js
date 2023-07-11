@@ -28,7 +28,7 @@ const MoviesController = {
             const movieId = req.params.id;
             const user = req.session.user;
             let watchList = [];
-            let reviews = [];
+            
 
             if (user) {
                 const userData = await User.findById(user._id);
@@ -38,6 +38,11 @@ const MoviesController = {
             }
 
             const movie = await fetchfunctions.getMovieById(movieId);
+            const users = await User.find({ "reviews.movieId": movieId }, { reviews: 1 });
+            const reviews = users.map(user => user.reviews).flat().reverse();
+                  
+
+
 
             res.render("movies/show", { movie, user,  watchList, reviews});
         } catch (error) {
