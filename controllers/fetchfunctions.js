@@ -136,6 +136,7 @@ const searchMovies = (title = "", year = "", genre = "") => {
 
 
 
+
 async function getMovieCast(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY_T}`;
 
@@ -162,6 +163,7 @@ async function getMovieTrailerUrl(movieId) {
     throw new Error("Failed to fetch movie trailer URL");
   }
 }
+
 
 
 

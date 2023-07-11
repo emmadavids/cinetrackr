@@ -26,8 +26,20 @@ const UserSchema = new mongoose.Schema({
     already_watched: {
         type:[String],
         default:[],
-    }
-})
+    },
+    reviews: {
+        type: [
+            {
+              movieId: Number,
+              review: String,
+              author: String, 
+              timePosted: { type : Date, default: Date.now },
+              }
+          ], 
+          default: [],
+        }
+
+});
 
     UserSchema.pre("save", function (next) {
         const user = this;
