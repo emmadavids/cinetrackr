@@ -32,7 +32,7 @@ describe("Home Page", () => {
 
 describe("Log-in Page", () => {
     it("allows user to log in", () =>{
-        
+    cy.get('input[name="email"]').type("cypresstest@example.com");
     cy.get('input[name="password"]').type("password1");
     cy.get('input[name="submit"]').click();
     cy.url().should("include", "/movies");
