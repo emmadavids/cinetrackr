@@ -34,7 +34,7 @@
     "nodemon": "^2.0.15"
   },
   "devDependencies": {
-    "cypress": "^12.17.0",
+    "cypress": "^12.17.1",
     "eslint": "^8.44.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-cypress": "^2.8.1",
