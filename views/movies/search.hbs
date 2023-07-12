@@ -2,6 +2,7 @@
 
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href='/stylesheets/movieIndex.css' />
     <style>
         .search-input {
             flex: 1;
@@ -10,6 +11,7 @@
 
         .search-button {
             padding: 8px 12px;
+
         }
 
         .movie-item {
@@ -26,6 +28,8 @@
         .card {
             width: 200px;
             border: none;
+            background-color: rgba(255, 255, 255, 0.7);
+
         }
 
         .card-title {
@@ -33,14 +37,25 @@
             height: 25px;
         }
 
-        .btn-custom {
-            font-size: 0.75rem;
-        }
-
         .sticky-container {
             position: sticky;
             top: 35%;
-            transform: translateY(-50%);
+            transform: translateY(-21%);
+        }
+
+        .search-form {
+            width: 270px;
+
+
+        }
+
+        .search-container {
+            background-color: rgb(231, 231, 231, 0.7);
+
+        }
+
+        p {
+            font-size: 20px;
         }
     </style>
 
@@ -57,10 +72,9 @@
 
     <header>
         <div class="container-fluid px-0">
-            <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark">
-                <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg shadow-sm navbar-dark" style="background-color: rgb(0,0,0, 0.6);">
+                <div class="container-fluid pl-0">
                     <a class="navbar-brand" href="sessions/new">
-
 
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -68,21 +82,21 @@
                         aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <a href="../profile" class="text-decoration-none">My profile</a>
+                    <img class="logo" src="/images/logo-white.png" alt="logo" />
+                    <a href="../profile" class=" new-post-link text-decoration-none ps-4">Profile</a>
                     <a class="new-post-link text-decoration-none ps-4" href="/movies">Films</a>
-                    <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Shows</a>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
-                            <form action="/sessions?_method=DELETE" method="POST">
-                                <input id="logout_button" type="submit" value="Log Out" />
+                            <form action='/sessions?_method=DELETE' method='POST'>
+                                <input id="logout_button" type="submit" value="Log Out">
                             </form>
                         </div>
-
                     </div>
                 </div>
             </nav>
         </div>
     </header>
+
 
 
 
@@ -92,18 +106,19 @@
 
             <!-- Search by title -->
             <div class="col-2 ">
-                <div class="sticky-container">
-                    <form action="/movies/search" method="post">
+                <div class="sticky-container ml-5">
+                    <form action="/movies/search" class="search-form mt-5" method="post">
                         <div class="search-container border rounded p-4">
+                            <p>Search By:</p>
                             <div class="form-group">
                                 <label for="search-input-title">Name</label>
                                 <input type="search" class="form-control" id="search-input-title" name="title"
-                                    aria-describedby="search box" placeholder="Title">
+                                    aria-describedby="search box" placeholder="Search by Title">
                             </div>
                             <div class="form-group">
                                 <label for="search-input-genre">Genre</label>
                                 <select class="form-control" id="search-input-genre" name="genre">
-                                    <option value="">Select Genre</option>
+                                    <option value="">Choose a Genre</option>
 
                                     <option value="Action">Action</option>
                                     <option value="Adventure">Adventure</option>
@@ -131,9 +146,9 @@
 
                             <label for="search-input-release_date">Release Year</label>
                             <input type="number" min="1894" class="form-control" id="search-input-release_date"
-                                name="release_date" placeholder="Enter year">
+                                name="release_date" placeholder="Enter Year">
 
-                            <button type="submit" id="search-button" class="btn btn-primary mt-3">Search</button>
+                            <button type="submit" id="search-button" class="btn btn-custom mt-3">Search</button>
                         </div>
                     </form>
                 </div>
@@ -166,7 +181,6 @@
                                                 List</button>
                                             {{else}}
                                             <button class="btn btn-primary add-to-watchlist btn-custom"
-
                                                 data-movie-id="{{id}}">Add to Watch List</button>
                                             <!-- Changed from 'title' to 'id' -->
 

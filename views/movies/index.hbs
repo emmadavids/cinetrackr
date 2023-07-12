@@ -7,7 +7,7 @@
   <title>My Movies</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel='stylesheet' href='/stylesheets/movieIndex.css'/>
+  <link rel='stylesheet' href='/stylesheets/movieIndex.css' />
   <style>
     .search-input {
       flex: 1;
@@ -16,6 +16,7 @@
 
     .search-button {
       padding: 8px 12px;
+
     }
 
     .movie-item {
@@ -32,7 +33,8 @@
     .card {
       width: 200px;
       border: none;
-      background-color: #E7E7E7;
+      background-color: rgba(255, 255, 255, 0.7);
+
     }
 
     .card-title {
@@ -43,18 +45,24 @@
     .sticky-container {
       position: sticky;
       top: 35%;
-      transform: translateY(-37%);
+      transform: translateY(-33%);
     }
 
-    .search-form{
+    .search-form {
       width: 270px;
+      
 
     }
 
-    .search-container{
-      background-color: #E7E7E7;
+    .search-container {
+      background-color: rgb(231, 231, 231, 0.7);
+
     }
 
+    p {
+      font-size: 20px;
+    }
+    
   </style>
 </head>
 
@@ -62,7 +70,7 @@
 
   <header>
     <div class="container-fluid px-0">
-      <nav class="navbar navbar-expand-lg shadow-sm navbar-dark"style="background-color: rgb(33, 35, 35);" >
+      <nav class="navbar navbar-expand-lg shadow-sm navbar-dark" style="background-color: rgb(0,0,0, 0.6);">
         <div class="container-fluid pl-0">
           <a class="navbar-brand" href="sessions/new">
 
@@ -71,8 +79,8 @@
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <img class="logo" src="/images/logo-white.png" alt="logo"/>
-          <a href="../profile" class=" new-post-link text-decoration-none ps-4">My profile</a>
+          <img class="logo" src="/images/logo-white.png" alt="logo" />
+          <a href="../profile" class=" new-post-link text-decoration-none ps-4">Profile</a>
           <a class="new-post-link text-decoration-none ps-4" href="/movies">Films</a>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
@@ -95,6 +103,7 @@
         <div class="sticky-container ml-5">
           <form action="/movies/search" class="search-form mt-5" method="post">
             <div class="search-container border rounded p-4">
+              <p>Search By:</p>
               <div class="form-group">
                 <label for="search-input-title">Name</label>
                 <input type="search" class="form-control" id="search-input-title" name="title"
