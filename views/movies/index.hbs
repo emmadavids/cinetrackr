@@ -50,7 +50,7 @@
 
     .search-form {
       width: 270px;
-      
+
 
     }
 
@@ -62,7 +62,14 @@
     p {
       font-size: 20px;
     }
-    
+
+    .img-hover {
+      transition: transform 0.2s ease
+    }
+
+    .img-hover:hover {
+      transform: scale(1.05);
+    }
   </style>
 </head>
 
@@ -156,7 +163,7 @@
             <div id="movie-latest-popular-container" class="col-md-12 d-flex flex-wrap justify-content-center">
               {{#each movies}}
               <div class="col-md-auto movie-item">
-                <div class="card">
+                <div class="card img-hover">
                   <a href="/movies/{{id}}"><img src="https://image.tmdb.org/t/p/original/{{poster_path}}"
                       alt="{{title}}" class="card-img-top"></a>
                   <div class="card-body p-2">
