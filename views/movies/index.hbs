@@ -7,6 +7,7 @@
   <title>My Movies</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel='stylesheet' href='/stylesheets/movieIndex.css'/>
   <style>
     .search-input {
       flex: 1;
@@ -31,6 +32,7 @@
     .card {
       width: 200px;
       border: none;
+      background-color: #E7E7E7;
     }
 
     .card-title {
@@ -41,12 +43,18 @@
     .sticky-container {
       position: sticky;
       top: 35%;
-      transform: translateY(-50%);
+      transform: translateY(-37%);
     }
 
-    .btn-custom {
-      font-size: 0.75rem;
+    .search-form{
+      width: 270px;
+
     }
+
+    .search-container{
+      background-color: #E7E7E7;
+    }
+
   </style>
 </head>
 
@@ -54,8 +62,8 @@
 
   <header>
     <div class="container-fluid px-0">
-      <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark">
-        <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg shadow-sm navbar-dark"style="background-color: rgb(33, 35, 35);" >
+        <div class="container-fluid pl-0">
           <a class="navbar-brand" href="sessions/new">
 
           </a>
@@ -63,7 +71,8 @@
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <a href="../profile" class="text-decoration-none">My profile</a>
+          <img class="logo" src="/images/logo-white.png" alt="logo"/>
+          <a href="../profile" class=" new-post-link text-decoration-none ps-4">My profile</a>
           <a class="new-post-link text-decoration-none ps-4" href="/movies">Films</a>
           <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Shows</a>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -84,18 +93,18 @@
 
       <!-- Search by title -->
       <div class="col-2 ">
-        <div class="sticky-container">
-          <form action="/movies/search" method="post">
+        <div class="sticky-container ml-5">
+          <form action="/movies/search" class="search-form mt-5" method="post">
             <div class="search-container border rounded p-4">
               <div class="form-group">
                 <label for="search-input-title">Name</label>
                 <input type="search" class="form-control" id="search-input-title" name="title"
-                  aria-describedby="search box" placeholder="Title">
+                  aria-describedby="search box" placeholder="Search by Title">
               </div>
               <div class="form-group">
                 <label for="search-input-genre">Genre</label>
                 <select class="form-control" id="search-input-genre" name="genre">
-                  <option value="">Select Genre</option>
+                  <option value="" color="light-gray">Choose a Genre</option>
 
                   <option value="Action">Action</option>
                   <option value="Adventure">Adventure</option>
@@ -123,9 +132,9 @@
 
               <label for="search-input-release_date">Release Year</label>
               <input type="number" min="1894" class="form-control" id="search-input-release_date" name="release_date"
-                placeholder="Enter year">
+                placeholder="Enter Year">
 
-              <button type="submit" id="search-button" class="btn btn-primary mt-3">Search</button>
+              <button type="submit" id="search-button" class="btn btn-custom mt-3">Search</button>
             </div>
           </form>
         </div>
@@ -145,9 +154,9 @@
                   <div class="card-body p-2">
                     <h5 class="card-title ">{{title}}</h5>
                     {{#ifInArray ../watchList id}} <!-- Changed from 'title' to 'id' -->
-                    <button class="btn btn-primary btn-custom" disabled>Added to Watch List</button>
+                    <button class="btn btn-custom" disabled>Added to Watch List</button>
                     {{else}}
-                    <button class="btn btn-primary add-to-watchlist btn-custom" data-movie-id="{{id}}">Add to Watch
+                    <button class="btn add-to-watchlist btn-custom" data-movie-id="{{id}}">Add to Watch
                       List</button> <!-- Changed from 'title' to 'id' -->
                     {{/ifInArray}}
                   </div>

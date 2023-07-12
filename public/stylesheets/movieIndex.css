@@ -1,0 +1,37 @@
+body {
+    background: rgba(12, 15, 22, 0.8);
+    ;
+}
+.logo{
+    height: 50px;
+    width: 50px;
+    
+
+}
+.new-post-link{
+    color: rgb(73, 178, 216);
+}
+
+.btn-custom {
+    background-color: rgb(40, 135, 169);
+    color: white;
+    font-size: 0.75rem;
+
+}
+.btn-custom:hover {
+    background-color: #53a482; 
+    color: #000000; 
+}
+
+#logout_button{
+    border: none;
+    outline: none;
+    background: none;
+    color: rgb(73, 178, 216);
+}
+
+.btn-custom:disabled{
+    background-color: rgb(100, 133, 145);
+    color: white;
+    font-size: 0.75rem;
+}
