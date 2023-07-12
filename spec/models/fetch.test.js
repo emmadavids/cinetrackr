@@ -95,7 +95,7 @@ describe('getLatestPopularMovies', () => {
 
 describe('searchMovies', () => {
     it('should return an array of movies for a valid search query when searching by title', async () => {
-        const validQuery = 'Avengers'; // Replace with a valid search query
+        const validQuery = 'Avengers';
 
         const mockedResponse = {
             results: [
@@ -210,7 +210,7 @@ it('should return an array of movies for a valid search query when searching by 
 
 
 it('should return an empty array for an invalid search query', async () => {
-    const movies = await searchMovies('InvalidSearchQuery'); // Replace with an invalid search query
+    const movies = await searchMovies('InvalidSearchQuery'); 
     assert(Array.isArray(movies));
     assert.strictEqual(movies.length, 0);
 });
@@ -251,9 +251,7 @@ describe('getMovieCast', () => {
 
 describe('getMovieTrailerUrl', () => {
     it('should return a valid YouTube trailer URL for a movie with a trailer', async () => {
-        const movieId = 12345; // Replace with a movie ID that has a trailer
-
-        // Mock the API response for the movie trailer URL
+        const movieId = 12345; 
         const mockedResponse = {
             results: [
                 {
@@ -266,7 +264,7 @@ describe('getMovieTrailerUrl', () => {
 
         nock('https://api.themoviedb.org')
             .get(`/3/movie/${movieId}/videos`)
-            .query({ api_key: API_KEY_T }) // Replace 'YOUR_API_KEY' with your actual API key
+            .query({ api_key: API_KEY_T }) 
             .reply(200, mockedResponse);
 
         const trailerUrl = await getMovieTrailerUrl(movieId);
