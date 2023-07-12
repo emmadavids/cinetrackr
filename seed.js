@@ -25,20 +25,9 @@ const usersData = [
         firstName: "Test",
         lastName: "Test",
         email: "test@test.com",
-        password: "password123", // Testtest1
+        password: "$2b$10$AN02NTa8hg.1uz8ffYAIEO.KOF7LWX.yHsOcgSmCmafqNBIN0xDaK", // password1
     },
-    {
-        firstName: "Test2",
-        lastName: "Test2",
-        email: "test2@test.com",
-        password: "password123", // Testtest1
-    },
-    {
-        firstName: "Test3",
-        lastName: "Test3",
-        email: "test3@test.com",
-        password: "password123", // Testtest1
-    },
+    
 ];
 
 // Delete existing data and insert the Users above

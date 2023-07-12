@@ -11,8 +11,11 @@ const sessionsRouter = require("./routes/sessions");
 const usersRouter = require("./routes/users");
 const moviesRouter = require("./routes/movies");
 const profileRouter = require("./routes/profile");
+
 const { handlebars } = require("hbs");
 const API_KEY_T = require('./tmdb_api_key');
+const moment = require("./public/javascripts/moment.min");
+
 
 
 const app = express();
@@ -70,13 +73,18 @@ handlebars.registerHelper("ifInArray", function (array, element, options) {
 	}
   });
 
+handlebars.registerHelper('wikiLink', function(name) {
+	const encodedName = encodeURIComponent(name);
+	return `https://en.wikipedia.org/wiki/${encodedName}`;
+  });
 
 // route setup
 app.use("/", homeRouter);
 app.use("/sessions", sessionsRouter);
 app.use("/users", usersRouter);
 app.use("/movies", sessionChecker, moviesRouter);
-app.use("/profile", profileRouter)
+app.use("/profile", profileRouter);
+//app.use("/:id/reviews", sessionChecker, moviesRouter);
 
 app.use(express.static('public', { 
 	setHeaders: (res, path) => {
@@ -104,7 +112,7 @@ app.use((err, req, res) => {
 	res.render("error");
 });
 
-// handlebars.registerHelper("timeAgo", (date) => moment(date).fromNow());
+handlebars.registerHelper("timeAgo", (date) => moment(date).fromNow());
 
 handlebars.registerHelper('jsonStringify', (context) => {
 	return JSON.stringify(context);

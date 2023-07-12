@@ -3,60 +3,42 @@
 
 <head>
 
-  <meta charset="UTF-8">
-  <meta name="description" content="Sign up page for Cinetrackr.">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="description" content="Sign up page for Cinetrackr.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title class="title">{{title}}</title>
     <link rel="stylesheet" href="/stylesheets/signup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container-fluid px-0">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/sessions/new">
-                    <img src="/images/logo.png" alt="Logo" width="100" height="40"
-                        class="d-inline-block align-text-top">
-
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-
-                </div>
-            </div>
-        </nav>
-    </div>
 
 
     </div>
 
     <div class="row signup-box">
-        <div class="col-2"></div>
+        
         <form id="new-user-form" action="/users/new" method="post"
-            class="row g-3 col-8 border p-5 bg-light rounded shadow">
+            class="row g-3 col-8 offset-lg-1 border p-5  rounded shadow mt-0 mr-5" style="background-color: rgba(211, 211, 211, 0.7);">
 
-            <p><span class="h3">Signup!</span><br>It's quick and easy.</p>
+            <p><span class="h3">Sign up!</span><br>It's quick and easy.</p>
             <hr>
             <div class="col-md-6">
                 <label for="firstName" class="form-label">First Name</label>
-                <input id="firstName" type="text" class="form-control" name="firstName" value="" required>
+                <input id="firstName" type="text" class="form-control" name="firstName" value="" placeholder="First name" required>
             </div>
             <div class="col-md-6">
                 <label for="lastName" class="form-label">Last Name</label>
-                <input type="text" id="lastName" name="lastName" value="" class="form-control" required>
+                <input type="text" id="lastName" name="lastName" value="" class="form-control" placeholder="Last name" required>
             </div>
             <div class="col-12">
                 <label for="email" class="form-label">Email Address</label>
-                <input type="text" class="form-control" name="email" id="email" required>
+                <input type="text" class="form-control" name="email" id="email" placeholder="Enter your email" required>
             </div>
             <div class="col-md-6">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" id="password" class="form-control" required>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Choose a password" required>
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-2"></div>
@@ -70,11 +52,12 @@
             {{/if}}
 
             <div class="col-12">
-                <input id="submit" type="submit" class="btn btn-dark" value="Register">
+                <input id="submit" type="submit" class="btn btn-custom" value="Register">
+                <p class="mt-2 mb-0">Already registered?<a class="text-link text-decoration-none" href="../sessions/new">  LOG IN HERE!</a></p>
             </div>
         </form>
-        <div class="col-2"></div>
-    </div>
+
+    
 </body>
 
 </html>
