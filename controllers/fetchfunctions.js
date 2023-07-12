@@ -156,7 +156,7 @@ async function getMovieTrailerUrl(movieId) {
     if (trailers.length > 0) {
       return `https://www.youtube.com/embed/${trailers[0].key}`;
     } else {
-      return ''; // No trailer available
+      return ''; 
     }
   } catch (error) {
     console.error(error);
