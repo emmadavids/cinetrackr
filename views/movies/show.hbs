@@ -461,6 +461,46 @@
                         });
                 });
             });
+
+            document.addEventListener("DOMContentLoaded", () => {
+                let castCards = document.querySelectorAll(".cast-card");
+                let toggleButton = document.querySelector("#show-more-button");
+
+                // Initially hide all cast members
+                for (let i = 0; i < castCards.length; i++) {
+                    castCards[i].classList.add("cast-card-hidden");
+                }
+
+                // Show the first six cast members
+                for (let i = 0; i < 5 && i < castCards.length; i++) {
+                    castCards[i].classList.remove("cast-card-hidden");
+                }
+
+                // When the "show more" button is clicked, show all the cast members
+                // and change the button to "hide". When "hide" is clicked, hide all
+                // the cast members and change the button back to "show more".
+                toggleButton.addEventListener("click", () => {
+                    if (toggleButton.textContent === "Show More") {
+                        for (let i = 0; i < castCards.length; i++) {
+                            castCards[i].classList.remove("cast-card-hidden");
+                        }
+                        toggleButton.textContent = "Hide";
+                    } else {
+                        for (let i = 0; i < castCards.length; i++) {
+                            castCards[i].classList.add("cast-card-hidden");
+                        }
+                        // Show the first six cast members
+                        for (let i = 0; i < 5 && i < castCards.length; i++) {
+                            castCards[i].classList.remove("cast-card-hidden");
+                        }
+                        toggleButton.textContent = "Show More";
+                    }
+                });
+            });
+
+
+
+
         </script>
 
     </body>

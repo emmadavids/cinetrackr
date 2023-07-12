@@ -99,7 +99,7 @@ describe("User model", () => {
             email: "someone@example.com",
             password: "1234ABCD",
         });
-        expect(user.password).toEqual("password");
+        expect(user.password).toEqual("1234ABCD");
     });
 
     it("returns invalid for empty password", () => {
