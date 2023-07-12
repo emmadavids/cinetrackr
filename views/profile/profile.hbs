@@ -5,6 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    body {
+      background-color: black;
+      color: white;
+    }
+
     ul {
       list-style-type: none;
       padding: 0;
@@ -27,7 +32,13 @@
 
     .card {
       width: 200px;
-      border: none;
+      border: 1px solid rgba(255, 255, 255, 0.567);
+      background-color: black;
+      color: rgba(255, 255, 255);
+    }
+
+    .bottom-border {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.567);
     }
 
     .card-title {
@@ -35,111 +46,176 @@
       height: 25px;
     }
 
-.already-watched {
-  content: "";
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity (last value) to control the intensity of the fade */
-  opacity: .5;
-  transition: opacity 0.3s ease;
-}
+    .already-watched {
+      content: "";
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      /* Adjust the opacity (last value) to control the intensity of the fade */
+      opacity: .5;
+      transition: opacity 0.3s ease;
+    }
+
+
+    .img-hover {
+      transition: transform 0.2s ease
+    }
+
+    .img-hover:hover {
+      transform: scale(1.05);
+    }
+
+    .logo {
+      height: 50px;
+      width: 50px;
+    }
+
+    .navbar-link {
+      color: rgb(73, 178, 216);
+    }
+
+    .btn:disabled {
+      opacity: 1;
+      /* Set the desired opacity value */
+      cursor: not-allowed;
+      /* Set the desired cursor style */
+      /* Additional styles to make it visually distinct */
+      background-color: #888;
+      /* Set the desired background color */
+      color: #fff;
+      /* Set the desired text color */
+      border-color: black;
+    }
+
+    .btn-custom {
+      background-color: rgb(40, 135, 169);
+      color: white;
+    }
+
+    .btn-custom:hover {
+      background-color: #53a482;
+      color: white;
+    }
+
+
+    #logout_button {
+      border: none;
+      outline: none;
+      background: none;
+      color: rgb(73, 178, 216);
+    }
 
 
 
+    .background-img {
+      height: 100vh;
+      background-image: url(../images/show-background.jpg);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      padding-left: 0;
+      padding-right: 0;
+      position: relative;
+      color: white;
+    }
   </style>
   <title>My Movies</title>
 </head>
 
-<body>
-  <header>
-    <div class="container-fluid px-0">
-      <nav class="navbar navbar-expand-lg shadow-sm navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="sessions/new">
-            <img src="/images/logo.png" alt="Logo" width="100" height="40" class="d-inline-block align-text-top">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a href="../profile" class="text-decoration-none">My profile</a>
-          <a href="../movies" class="new-post-link text-decoration-none ps-4" href="/posts/new">Films</a>
-          <a class="new-post-link text-decoration-none ps-4" href="/posts/new">Shows</a>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
-              <form action='/sessions?_method=DELETE' method='POST'>
-                <input id="logout_button" type="submit" value="Log Out">
-              </form>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </header>
+<body class="background-img">
 
-  <div class="container">
-    <div class="row">
-      <h1 class="text-center py-4">My Watch List</h1>
-      <ul>
-        <div id="movie-latest-popular-container" class="col-md-12 d-flex flex-wrap justify-content-start">
-          {{#each watch_list}}
-          <li>
-            <div class="movie-item col-md-auto">
-              <div class="card mx-4">
-
-
-                <a href="/movies/{{this.id}}">
-                  {{#if poster_path}}
-                  <img src="https://image.tmdb.org/t/p/original/{{this.poster_path}}" alt="{{this.title}}"
-                    class="card-img-top">
-                  {{else}}
-                  <img
-                    src="https://res.cloudinary.com/acebook-poke/image/upload/v1688999260/No_Image_Available_jvbpqq.jpg"
-                    alt="{{title}}" class="card-img-top">
-                  {{/if}}
-
-                </a>
-                <div class="card-body p-2">
-                  <h5 class="card-title">{{this.title}}</h5>
-                  <form class="remove-form" action="/profile/remove" method="POST">
-                    <input type="hidden" name="id" value="{{this.id}}"> <!-- Changed the hidden input name to "id" -->
-                    <button type="submit" class="btn btn-primary mt-2 btn-sm">Remove</button>
-                  </form>
-                  <form class="remove-form" action="/profile/archive" method="POST">
-                    <input type="hidden" name="id" value="{{this.id}}"> <!-- Changed the hidden input name to "id" -->
-                    <button type="submit" class="btn btn-primary mt-2 btn-sm">Mark as watched</button>
-                  </form>
-                </div>
+    <header>
+      <div class="container-fluid px-0 bottom-border">
+        <nav class="navbar navbar-expand-lg shadow-sm navbar-dark" style="background-color: rgb(0,0,0);">
+          <div class="container-fluid pl-0">
+            <a class="navbar-brand" href="sessions/new">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <img class="logo" src="/images/logo-white.png" alt="logo" />
+            <a class="navbar-link text-decoration-none ps-4" href="/movies">Films</a>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
+                <form action='/sessions?_method=DELETE' method='POST'>
+                  <input id="logout_button" type="submit" value="Log Out">
+                </form>
               </div>
             </div>
-          </li>
-          {{/each}}
-        </div>
-      </ul>
-    </div>
-
-    <div class="row">
-      <div class="d-flex justify-content-center">
-        <a class="text-center btn btn-primary mb-2" href="../movies" role="button">Add more to watchlist</a>
+          </div>
+        </nav>
       </div>
-    </div>
-        <h1 class="text-center py-4">Movies I have Already Watched</h1>
+    </header>
+
+
+    <div class="container ">
+
+      <div class="row">
+        <h1 class="text-center py-4 my-4">My Watch List</h1>
         <ul>
+          <div id="movie-latest-popular-container" class="col-md-12 d-flex flex-wrap justify-content-start">
+            {{#each watch_list}}
+            <li>
+              <div class="movie-item col-md-auto">
+                <div class="card mx-4 img-hover">
+
+
+                  <a href="/movies/{{this.id}}">
+                    {{#if poster_path}}
+                    <img src="https://image.tmdb.org/t/p/original/{{this.poster_path}}" alt="{{this.title}}"
+                      class="card-img-top img-fluid bottom-border">
+                    {{else}}
+                    <img
+                      src="https://res.cloudinary.com/acebook-poke/image/upload/v1688999260/No_Image_Available_jvbpqq.jpg"
+                      alt="{{title}}" class="card-img-top img-fluid bottom-border ">
+                    {{/if}}
+
+                  </a>
+                  <div class="card-body p-2">
+                    <h5 class="card-title">{{this.title}}</h5>
+                    <form class="remove-form" action="/profile/remove" method="POST">
+                      <input type="hidden" name="id" value="{{this.id}}"> <!-- Changed the hidden input name to "id" -->
+                      <button type="submit" class="btn btn-custom mt-2 btn-sm">Remove</button>
+                    </form>
+                    <form class="remove-form" action="/profile/archive" method="POST">
+                      <input type="hidden" name="id" value="{{this.id}}"> <!-- Changed the hidden input name to "id" -->
+                      <button type="submit" class="btn btn-custom mt-2 btn-sm">Mark as watched</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </li>
+            {{/each}}
+          </div>
+        </ul>
+      </div>
+
+      <div class="row">
+        <div class="d-flex justify-content-center">
+          <a class="text-center btn btn-custom mb-2" href="../movies" role="button">Add more to watchlist</a>
+        </div>
+      </div>
+
+      <hr>
+
+      <h1 class="text-center py-4 my-4">Movies I have Already Watched</h1>
+      <ul>
         <div id="movie-latest-popular-container" class="col-md-12 d-flex flex-wrap justify-content-start">
           {{#each already_watched}}
           <li>
             <div class="movie-item col-md-auto">
-              <div class="card mx-4">
+              <div class="card mx-4 img-hover">
                 <a href="/movies/{{this.id}}">
                   {{#if poster_path}}
                   <img src="https://image.tmdb.org/t/p/original/{{this.poster_path}}" alt="{{this.title}}"
-                    class="card-img-top already-watched">
+                    class="card-img-top img-fluid already-watched border-bottom border-light-subtle">
                   {{else}}
                   <img
                     src="https://res.cloudinary.com/acebook-poke/image/upload/v1688999260/No_Image_Available_jvbpqq.jpg"
-                    alt="{{title}}" class="card-img-top">
+                    alt="{{title}}" class="card-img-top img-fluid border-bottom border-light-subtle">
                   {{/if}}
 
                 </a>
@@ -147,17 +223,18 @@
                   <h5 class="card-title">{{this.title}}</h5>
                   <form class="remove-form" action="/profile/removewatched" method="POST">
                     <input type="hidden" name="id" value="{{this.id}}"> <!-- Changed the hidden input name to "id" -->
-                    <button type="submit" class="btn btn-primary mt-2 btn-sm">Remove</button>
+                    <button type="submit" class="btn btn-custom mt-2 btn-sm">Remove</button>
                   </form>
                 </div>
               </div>
             </div>
           </li>
-          
+
           {{/each}}
-        </ul>
-        </div>
-  </div>
+      </ul>
+    </div>
+
+
 </body>
 
 </html>
