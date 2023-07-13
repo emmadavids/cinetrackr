@@ -3,8 +3,11 @@ body {
     background-image: url('../images/The_revenant.webp');
     background-position: center;
     background-repeat: no-repeat;
+    height: 100vh;
     background-size: cover;
 }
+
+
 
 .signup-box {
     margin-top: 100px;
