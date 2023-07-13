@@ -37,12 +37,14 @@
             height: 25px;
         }
 
-
-      
+        .sticky-container {
+            position: sticky;
+            top: 35%;
+            transform: translateY(-21%);
+        }
 
         .search-form {
             width: 270px;
-
 
         }
 
@@ -66,8 +68,6 @@
         .img-hover:hover {
             transform: scale(1.05);
         }
-
-
     </style>
 
 
@@ -118,8 +118,8 @@
             <!-- Search by title -->
             <div class="col-2 ">
 
-                <div class="mt-5">
-                    <form action="/movies/search" method="post">
+                <div class="sticky-container ml-5">
+                    <form action="/movies/search" class="search-form mt-5" method="post">
 
                         <div class="search-container border rounded p-4">
                             <p>Search By:</p>
