@@ -25,53 +25,53 @@ const MoviesController = {
 
     async show(req, res) {
         try {
-          const movieId = req.params.id;
-          const user = req.session.user;
-          let watchList = [];
-      
-          if (user) {
-            const userData = await User.findById(user._id);
-            if (userData) {
-              watchList = userData.watch_list;
+            const movieId = req.params.id;
+            const user = req.session.user;
+            let watchList = [];
+
+            if (user) {
+                const userData = await User.findById(user._id);
+                if (userData) {
+                    watchList = userData.watch_list;
+                }
             }
-          }
 
-          const movie = await fetchfunctions.getMovieById(movieId);
-    console.log("MOVIES>>>", movie);
-    const users = await User.find({ "reviews.movieId": movieId });
-    console.log("USERS WITH THAT MOVIE REVIEWED>>>", users);
-    const reviews = users.reduce((acc, user) => {
-      const filteredReviews = user.reviews.filter(review => review.movieId.toString() === movieId.toString());
-      return acc.concat(filteredReviews);
-    }, []).reverse();
-    console.log("REVIEWS>>>", reviews);
-                  
-    
-          
+            const movie = await fetchfunctions.getMovieById(movieId);
+            console.log("MOVIES>>>", movie);
+            const users = await User.find({ "reviews.movieId": movieId });
+            console.log("USERS WITH THAT MOVIE REVIEWED>>>", users);
+            const reviews = users.reduce((acc, user) => {
+                const filteredReviews = user.reviews.filter(review => review.movieId.toString() === movieId.toString());
+                return acc.concat(filteredReviews);
+            }, []).reverse();
+            console.log("REVIEWS>>>", reviews);
 
-          const cast = await fetchfunctions.getMovieCast(movieId);
-          const trailerUrl = await fetchfunctions.getMovieTrailerUrl(movieId);
-      
-          const firstSixActors = cast.slice(0, 6);
-          const remainingActors = cast.slice(6);
-      
-          res.render("movies/show", {
-            movie,
-            user,
-            watchList,
-            reviews,
-            firstSixActors,
-            remainingActors,
-            trailerUrl,
-            userScore: movie.userScore
-          });
+
+
+
+            const cast = await fetchfunctions.getMovieCast(movieId);
+            const trailerUrl = await fetchfunctions.getMovieTrailerUrl(movieId);
+
+            const firstSixActors = cast.slice(0, 6);
+            const remainingActors = cast.slice(6);
+
+            res.render("movies/show", {
+                movie,
+                user,
+                watchList,
+                reviews,
+                firstSixActors,
+                remainingActors,
+                trailerUrl,
+                userScore: movie.userScore
+            });
         } catch (error) {
-          console.error(error);
-          res.status(500).send("Internal server error");
+            console.error(error);
+            res.status(500).send("Internal server error");
         }
-      },
-      
-    
+    },
+
+
 
 
     async addToWatchList(req, res) {

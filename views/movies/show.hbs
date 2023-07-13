@@ -258,54 +258,49 @@
         .img-poster {
             height: 80vh;
             width: auto;
-            
+
         }
 
         .btn:disabled {
-  opacity: 1;
-  /* Set the desired opacity value */
-  cursor: not-allowed;
-  /* Set the desired cursor style */
-  /* Additional styles to make it visually distinct */
-  background-color: #888;
-  /* Set the desired background color */
-  color: #fff;
-  /* Set the desired text color */
-  border-color: black;
-}
+            opacity: 1;
+            /* Set the desired opacity value */
+            cursor: not-allowed;
+            /* Set the desired cursor style */
+            /* Additional styles to make it visually distinct */
+            background-color: #888;
+            /* Set the desired background color */
+            color: #fff;
+            /* Set the desired text color */
+            border-color: black;
+        }
 
-.btn-custom {
-    background-color: rgb(40, 135, 169);
-    color: white;
-}
+        .btn-custom {
+            background-color: rgb(40, 135, 169);
+            color: white;
+        }
 
-.btn-custom:hover {
-    background-color: #53a482;
-    color: white;
-}
-
-
-#logout_button{
-    border: none;
-    outline: none;
-    background: none;
-    color: rgb(73, 178, 216);
-}
+        .btn-custom:hover {
+            background-color: #53a482;
+            color: white;
+        }
 
 
-.logo{
-    height: 50px;
-    width: 50px;
-}
-
-.navbar-link {
-     color: rgb(73, 178, 216);
-}
+        #logout_button {
+            border: none;
+            outline: none;
+            background: none;
+            color: rgb(73, 178, 216);
+        }
 
 
+        .logo {
+            height: 50px;
+            width: 50px;
+        }
 
-
-
+        .navbar-link {
+            color: rgb(73, 178, 216);
+        }
     </style>
 
     <head>
@@ -319,7 +314,7 @@
 
 <body>
 
-<header>
+    <header>
         <div class="container-fluid px-0">
             <nav class="navbar navbar-expand-lg shadow-sm navbar-dark" style="background-color: rgb(0,0,0);">
                 <div class="container-fluid pl-0">
@@ -514,8 +509,7 @@
                     {{/if}}
                     <input type="hidden" name="movieId" value="{{ movie.id }}">
                     <br>
-                    <button class="submitButton btn btn-custom shadow-sm px-4 mr-3 mb-3"
-                        type="submit">Submit</button>
+                    <button class="submitButton btn btn-custom shadow-sm px-4 mr-3 mb-3" type="submit">Submit</button>
                 </form>
                 <hr>
                 {{#each reviews}}
@@ -575,41 +569,8 @@
                 });
             });
 
-            document.addEventListener("DOMContentLoaded", () => {
-                let castCards = document.querySelectorAll(".cast-card");
-                let toggleButton = document.querySelector("#show-more-button");
-
-                // Initially hide all cast members
-                for (let i = 0; i < castCards.length; i++) {
-                    castCards[i].classList.add("cast-card-hidden");
-                }
-
-                // Show the first six cast members
-                for (let i = 0; i < 5 && i < castCards.length; i++) {
-                    castCards[i].classList.remove("cast-card-hidden");
-                }
-
-                // When the "show more" button is clicked, show all the cast members
-                // and change the button to "hide". When "hide" is clicked, hide all
-                // the cast members and change the button back to "show more".
-                toggleButton.addEventListener("click", () => {
-                    if (toggleButton.textContent === "Show More") {
-                        for (let i = 0; i < castCards.length; i++) {
-                            castCards[i].classList.remove("cast-card-hidden");
-                        }
-                        toggleButton.textContent = "Hide";
-                    } else {
-                        for (let i = 0; i < castCards.length; i++) {
-                            castCards[i].classList.add("cast-card-hidden");
-                        }
-                        // Show the first six cast members
-                        for (let i = 0; i < 5 && i < castCards.length; i++) {
-                            castCards[i].classList.remove("cast-card-hidden");
-                        }
-                        toggleButton.textContent = "Show More";
-                    }
-                });
-            });
+            
+    
 
 
 
@@ -619,8 +580,3 @@
     </body>
 
 </html>
-
-
-
-
-
