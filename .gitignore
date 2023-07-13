@@ -1,3 +1,5 @@
 node_modules
 
 tmdb_api_key.js
+
+cypress/e2e/videos/
